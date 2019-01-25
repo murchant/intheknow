@@ -45,7 +45,6 @@ def get_transfers(qPage):
         loans.append([loansAr[windowL].encode('utf-8'), loansAr[windowL+1].encode('utf-8'),loansAr[windowL+2].encode('utf-8'),loansAr[windowL+3].encode('utf-8')])
         windowL+=4
 
-    print((transfers[len(transfers)-1][0]))
     return {"transfers": transfers, "loans": loans}
 
 if __name__ == '__main__':
