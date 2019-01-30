@@ -18,6 +18,14 @@ Knowledge Base was created to store a collection of known successful transfers a
 - TODO:
   - declare synonyms
   - declare method of generating the relationships
-  - declare true relationships
+  - generate true relationships
   - false relationships (false harder as you've to come up with realistic transfer relationships, that didn't happen. What defines realistic though.. see).
-  - Retrieve rumour set
+  - Retrieve rumour
+
+### Rumour retrieval method 1:
+  - define synonyms
+  - define true query terms
+  - retrieve data set using terms
+  - use true relationships to retrieve rumours which are false. (ie: contains player name but wrong destination club)
+
+- create realtions.py
