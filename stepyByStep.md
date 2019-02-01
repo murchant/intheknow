@@ -28,4 +28,6 @@ Knowledge Base was created to store a collection of known successful transfers a
   - retrieve data set using terms
   - use true relationships to retrieve rumours which are false. (ie: contains player name but wrong destination club)
 
-- create realtions.py
+- **created relations.py:** generates true and false player and club relationships, and generates query search terms for said relationships
+
+- **created getTweets.py:** uses query terms to execute shell command and retrieve tweets.
