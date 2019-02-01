@@ -21,7 +21,7 @@ def make_true_qterms():
         csv_reader = csv.reader(transfers, delimiter=',')
         for row in csv_reader:
             true_queries.append(generate_ways(row))
-    print(true_queries)
+    return true_queries
 
 
 def generate_ways(transfer):
