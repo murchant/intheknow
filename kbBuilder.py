@@ -2,6 +2,7 @@ import urllib2
 from bs4 import BeautifulSoup
 import csv
 
+
 def main():
     info2018 = get_transfers('https://en.wikipedia.org/wiki/List_of_English_football_transfers_summer_2018')
     transfers_eighteen = info2018["transfers"]
@@ -16,11 +17,12 @@ def main():
 
 
 def write_info(info, name):
-    with open(name, mode='w') as info_file :
+    with open(name, mode='w') as info_file:
         info_writer = csv.writer(info_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for i in info:
-                info_writer.writerow(i)
+            info_writer.writerow(i)
     return 1
+
 
 def get_transfers(qPage):
     quote_page = qPage
@@ -35,17 +37,18 @@ def get_transfers(qPage):
     windowT = 0
     windowL = 0
     transfers = []
-    loans=[]
+    loans = []
 
-    while(windowT<len(transAr)):
-        transfers.append([transAr[windowT].encode('utf-8'), transAr[windowT+1].encode('utf-8'),transAr[windowT+2].encode('utf-8'),transAr[windowT+3].encode('utf-8'),transAr[windowT+4].encode('utf-8')])
-        windowT+=5
+    while(windowT < len(transAr)):
+        transfers.append([transAr[windowT].encode('utf-8'),  transAr[windowT+1].encode('utf-8'), transAr[windowT+2].encode('utf-8'), transAr[windowT+3].encode('utf-8'), transAr[windowT+4].encode('utf-8')])
+        windowT += 5
 
-    while(windowL<len(loansAr)):
-        loans.append([loansAr[windowL].encode('utf-8'), loansAr[windowL+1].encode('utf-8'),loansAr[windowL+2].encode('utf-8'),loansAr[windowL+3].encode('utf-8')])
-        windowL+=4
+    while(windowL < len(loansAr)):
+        loans.append([loansAr[windowL].encode('utf-8'), loansAr[windowL+1].encode('utf-8'), loansAr[windowL+2].encode('utf-8'), loansAr[windowL+3].encode('utf-8')])
+        windowL += 4
 
     return {"transfers": transfers, "loans": loans}
+
 
 if __name__ == '__main__':
     main()
