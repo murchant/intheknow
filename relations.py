@@ -26,13 +26,36 @@ def make_true_qterms():
 
 def generate_ways(transfer):
     variations = []
-    transfer_terms = ["transfer", "signing", "done deal", "in the know", "medical", "close", "talks with", "talks", "signed", "verge"]
+    transfer_terms = ["transfer", "signing", "done deal", "in the know", "medical", "close", "talks with", "talks", "signed", "verge", "opened"]
 
     for i in transfer_terms:
         query_term = transfer[0] + " " + transfer[1] + " " + transfer[2] + " " + i
         variations.append(query_term)
     return variations
 
+def make_commands():
+    file = open("cmds.txt",'w')
+    player_rels = make_true_qterms()
+    wait_break=0
+    for i in player_rels:
+        for j in i:
+            term = '"' + j + '"'
+            cmd = "python GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2018-06-01 --until 2018-08-30  --output true.csv + &"
+            file.write(cmd+"\n")
+            wait_break=wait_break+1
+            if wait_break%20==0:
+                file.write("wait"+"\n")
+    file.close()
+    for i in player_rels:
+        for j in i:
+            term = '"' + j + '"'
+            cmd = "python GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2018-06-01 --until 2018-08-30  --output true.csv + &"
+            file.write(cmd+"\n")
+            wait_break=wait_break+1
+            if wait_break%20==0:
+                file.write("wait"+"\n")
+    file.close()
+    return
 
 if __name__ == '__main__':
     main()

@@ -31,3 +31,8 @@ Knowledge Base was created to store a collection of known successful transfers a
 - **created relations.py:** generates true and false player and club relationships, and generates query search terms for said relationships
 
 - **created getTweets.py:** uses query terms to execute shell command and retrieve tweets.
+
+  - cmds.txt is run as bas script and runs 20 queries at a time
+
+  - club synonym.
+  - player relationship with just *to club* and *player*.
