@@ -32,8 +32,15 @@ Knowledge Base was created to store a collection of known successful transfers a
 
 - **created getTweets.py:** uses query terms to execute shell command and retrieve tweets.
 
+- **created dataCheck.py:** uses query terms to execute shell command and retrieve tweets.
+
   - cmds.txt is run as bas script and runs 20 queries at a time
 
   - club synonym.
   - player relationship with just *to club* and *player*.
   - Defined shorter queries, composed of payer and linked club.
+  - *Interesting:* Data frame for shorter queries was over twice that of longer queries
+    - 2018: Shorter: 44220 Longer: 19081
+    - Intersection of the two is 14602
+    - Therefore over 75% longer are present in shorter but still worth querying.
+    - Left join (left merge pandas) gives us combined set of true tweets no duplicates of 46750.
