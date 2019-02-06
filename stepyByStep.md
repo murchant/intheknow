@@ -36,3 +36,4 @@ Knowledge Base was created to store a collection of known successful transfers a
 
   - club synonym.
   - player relationship with just *to club* and *player*.
+  - Defined shorter queries, composed of payer and linked club.

@@ -15,27 +15,32 @@ def get_true_rels():
                 rel_writer.writerow([row[1], row[2], row[3], row[0]])  # player, from club, to club, date
 
 
-def make_true_qterms():
+def make_true_qterms(type):
     true_queries = []
     with open('relationships.csv') as transfers:
         csv_reader = csv.reader(transfers, delimiter=',')
         for row in csv_reader:
-            true_queries.append(generate_ways(row))
+            true_queries.append(generate_ways(row, type))
     return true_queries
 
 
-def generate_ways(transfer):
+def generate_ways(transfer, type):
     variations = []
-    transfer_terms = ["transfer", "signing", "done deal", "in the know", "medical", "close", "talks with", "talks", "signed", "verge", "opened"]
+    transfer_terms = ["transfer", "signing", "deal", "medical", "close", "talks", "signed", "verge", "opened"]
 
-    for i in transfer_terms:
-        query_term = transfer[0] + " " + transfer[1] + " " + transfer[2] + " " + i
-        variations.append(query_term)
+    if type=="0":
+        for i in transfer_terms:
+            query_term = transfer[0] + " " + transfer[1] + " " + transfer[2] + " "  + i
+            variations.append(query_term)
+    elif type =="1":
+        for i in transfer_terms:
+            query_term = transfer[0] + " " + transfer[2] + " "  + i
+            variations.append(query_term)
     return variations
 
 def make_commands():
     file = open("cmds.txt",'w')
-    player_rels = make_true_qterms()
+    player_rels = make_true_qterms("0")
     wait_break=0
     for i in player_rels:
         for j in i:
@@ -46,10 +51,12 @@ def make_commands():
             if wait_break%20==0:
                 file.write("wait"+"\n")
     file.close()
+    file = open("cmdsShorter.txt",'w')
+    player_rels = make_true_qterms("1")
     for i in player_rels:
         for j in i:
             term = '"' + j + '"'
-            cmd = "python GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2018-06-01 --until 2018-08-30  --output true.csv + &"
+            cmd = "python GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2018-06-01 --until 2018-08-30  --output trueShorter.csv + &"
             file.write(cmd+"\n")
             wait_break=wait_break+1
             if wait_break%20==0:
