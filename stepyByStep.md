@@ -28,14 +28,14 @@ Knowledge Base was created to store a collection of known successful transfers a
   - retrieve data set using terms
   - use true relationships to retrieve rumours which are false. (ie: contains player name but wrong destination club)
 
+#### True Rumour
 - **created relations.py:** generates true and false player and club relationships, and generates query search terms for said relationships
 
 - **created getTweets.py:** uses query terms to execute shell command and retrieve tweets.
 
 - **created dataCheck.py:** uses query terms to execute shell command and retrieve tweets.
 
-  - cmds.txt is run as bas script and runs 20 queries at a time
-
+  - cmds.txt is run as base script and runs 20 queries at a time
   - club synonym.
   - player relationship with just *to club* and *player*.
   - Defined shorter queries, composed of payer and linked club.
@@ -43,4 +43,7 @@ Knowledge Base was created to store a collection of known successful transfers a
     - 2018: Shorter: 44220 Longer: 19081
     - Intersection of the two is 14602
     - Therefore over 75% longer are present in shorter but still worth querying.
-    - Left join (left merge pandas) gives us combined set of true tweets no duplicates of 46750.
+    - Outer join (outer merge pandas) gives us combined set of true tweets no duplicates of 46750. (*new numbers since this recording*)
+    - "Up to" date set to day they signed for club (maybe set it to day before)
+
+#### Entity Recognition
