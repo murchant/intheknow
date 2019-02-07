@@ -32,21 +32,25 @@ def get_transfers(qPage):
     ar = soup.find_all('tbody')
     textTransfer = ar[0].text.strip()
     textLoans = ar[1].text.strip()
+
     transAr = textTransfer.split('\n\n')
     loansAr = textLoans.split('\n\n')
+    # print(transAr)
     windowT = 0
     windowL = 0
     transfers = []
     loans = []
 
     while(windowT < len(transAr)):
-        transfers.append([transAr[windowT].encode('utf-8'),  transAr[windowT+1].encode('utf-8'), transAr[windowT+2].encode('utf-8'), transAr[windowT+3].encode('utf-8'), transAr[windowT+4].encode('utf-8')])
+        transfers.append([transAr[windowT].encode('utf-8').strip(),  transAr[windowT+1].encode('utf-8'), transAr[windowT+2].encode('utf-8'), transAr[windowT+3].encode('utf-8'), transAr[windowT+4].encode('utf-8')])
         windowT += 5
 
     while(windowL < len(loansAr)):
-        loans.append([loansAr[windowL].encode('utf-8'), loansAr[windowL+1].encode('utf-8'), loansAr[windowL+2].encode('utf-8'), loansAr[windowL+3].encode('utf-8')])
+        loans.append([loansAr[windowL].encode('utf-8').strip(), loansAr[windowL+1].encode('utf-8'), loansAr[windowL+2].encode('utf-8'), loansAr[windowL+3].encode('utf-8')])
         windowL += 4
 
+    for i in transfers:
+        print i
     return {"transfers": transfers, "loans": loans}
 
 

@@ -3,11 +3,12 @@ import relations
 import pandas as pd
 
 def main():
-    # relations.make_commands()
+    relations.get_true_rels()
+    relations.make_commands()
     # combine_tweets()
     print("Commands made")
 
-    
+
 # Combine long & query tweet returned from API call
 def combine_tweets():
     df_long = pd.read_csv("info/true.csv", sep=';', error_bad_lines=False)
