@@ -65,6 +65,8 @@ def make_commands():
     file.close()
     return
 
+# reformat date
+# set it to the date before the signing was confirmed ** (to be done)
 def date_changer(date_str):
     date = date_str.split(" ")
     if len(date)<3:
