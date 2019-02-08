@@ -9,7 +9,7 @@ def main():
     print("Commands made")
 
 
-# Combine long & query tweet returned from API call
+# Combine long & short query tweet returned from API call
 def combine_tweets():
     df_long = pd.read_csv("info/true.csv", sep=';', error_bad_lines=False, low_memory=False)
     df_short = pd.read_csv("info/trueShorter.csv", sep=';', error_bad_lines=False, low_memory=False)

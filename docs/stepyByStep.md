@@ -47,3 +47,8 @@ Knowledge Base was created to store a collection of known successful transfers a
     - "Up to" date set to day they signed for club (maybe set it to day before)
 
 #### Entity Recognition
+- **Created ner.py:** Uses SpaCy for entity recognition.
+
+
+#### DataBase setup:
+-
