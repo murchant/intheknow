@@ -53,3 +53,6 @@ Knowledge Base was created to store a collection of known successful transfers a
 #### DataBase setup:
 - Running mongodb as local store
 - Created true rels store
+- transferdb:
+    - player collection
+    - true transfers collection 
