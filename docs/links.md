@@ -6,8 +6,10 @@
 
 [SpaCy](https://spacy.io/usage/)
 
+[PoS Tagging Spacy](https://spacy.io/usage/linguistic-features)
+
 [NER Stanford](https://nlp.stanford.edu/software/CRF-NER.shtml)
 
 
 #### Ascii's
-- ’ 
+- ’
