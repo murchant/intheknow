@@ -8,6 +8,7 @@ def main():
     transferdb = myclient["transferdb"]
     # DATABASE SETUP
     # reset_collections(transferdb)
+    coll_list=transferdb.list_collection_names()
 
 
 def store_data(transferdb, path):
@@ -51,7 +52,7 @@ def make_transfer_db(transferdb, path):
 def query_collection(query, cname, db):
     collection=db[cname]
     docs = collection.find(query)
-    print("Query: "+ query["Name"])
+    # print("Query: "+ query["label"])
     return docs
 
 

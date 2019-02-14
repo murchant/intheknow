@@ -21,13 +21,18 @@ def main():
     pclubs = get_potential_clubs(entities)
     x = make_player_queries(pplayers)
     player_hit = query_db(x)
-    process_tweet(player_hit[0], pclubs)
+    process_tweet(tweet, player_hit[0], pclubs)
+    print("--------------------------------")
+    
 
 
-def process_tweet(hit, pclubs):
+def process_tweet(tweet, hit, pclubs):
+    coll = transferdb["labelled_tweets"]
     for i in pclubs:
         if hit['Moving to'] == i:
             print i
+            entry = {"tweet_text": tweet, "label":"True"}
+            coll.insert_one(entry)
 
 def verify_label(cursor):
     print(cursor["Moving to"])
@@ -76,6 +81,7 @@ def query_db(qs):
         x = db.query_collection(i, "confirmed_transfers", transferdb)
         if x.count() > 0:
             for i in x:
+                print("Hit!: "+ i["Name"])
                 actual_player.append(i)
     return actual_player
 
