@@ -51,7 +51,7 @@ def make_transfer_db(transferdb, path):
 def query_collection(query, cname, db):
     collection=db[cname]
     docs = collection.find(query)
-    print(query)
+    print("Query: "+ query["Name"])
     return docs
 
 

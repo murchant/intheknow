@@ -18,14 +18,16 @@ def main():
     tweet = "Leicester keen on Portos Pereira: Leicester City are interested in signing Porto right back Ricardo Pereira , Sky Sports News has learned, as Claude Puel considers options to strengthen his defence this summer"
     entities = get_entities(tweet)
     pplayers = get_potential_players(entities)
+    pclubs = get_potential_clubs(entities)
     x = make_player_queries(pplayers)
-    results = query_db(x)
-    # (query, cursor) = results[0]
-    # check if moving_to is in tweet
-    # then label true
-    # verify_label(cursor)
+    player_hit = query_db(x)
+    process_tweet(player_hit[0], pclubs)
 
-    print results[0][1].explain()
+
+def process_tweet(hit, pclubs):
+    for i in pclubs:
+        if hit['Moving to'] == i:
+            print i
 
 def verify_label(cursor):
     print(cursor["Moving to"])
@@ -35,6 +37,13 @@ def get_potential_players(ents):
     potentials=[]
     for (i,j) in ents:
         if j == "PERSON":
+            potentials.append(i)
+    return potentials
+
+def get_potential_clubs(ents):
+    potentials=[]
+    for (i,j) in ents:
+        if j == "ORG" or j== "GPE" or j=="NORP":
             potentials.append(i)
     return potentials
 
@@ -66,7 +75,8 @@ def query_db(qs):
     for i in qs:
         x = db.query_collection(i, "confirmed_transfers", transferdb)
         if x.count() > 0:
-            actual_player.append((i, x))
+            for i in x:
+                actual_player.append(i)
     return actual_player
 
 
