@@ -7,15 +7,7 @@ def main():
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
     transferdb = myclient["transferdb"]
     # DATABASE SETUP
-    # path = "info/true_data_set.csv"
-    # path2 = "info/transfers2018.csv"
-    # store_data(transferdb, path)
-    # make_player_db(transferdb, path2)
-    # make_transfer_db(transferdb, path2)
-    query = {"player": "Carl Baker"}
-    x = query_collection(query, "players", transferdb)
-
-
+    # reset_collections(transferdb)
 
 
 def store_data(transferdb, path):
@@ -59,9 +51,25 @@ def make_transfer_db(transferdb, path):
 def query_collection(query, cname, db):
     collection=db[cname]
     docs = collection.find(query)
-    for i in docs:
-        print(i)
+    print(query)
     return docs
+
+
+def reset_collections(transferdb):
+    coll_list=transferdb.list_collection_names()
+    print(coll_list)
+    for i in coll_list:
+        coll = transferdb[i]
+        coll.drop()
+    coll_list=transferdb.list_collection_names()
+    print(coll_list)
+    path = "info/true_data_set.csv"
+    path2 = "info/transfers2018.csv"
+    store_data(transferdb, path)
+    make_player_db(transferdb, path2)
+    make_transfer_db(transferdb, path2)
+    coll_list=transferdb.list_collection_names()
+    print(coll_list)
 
 
 if __name__ == '__main__':
