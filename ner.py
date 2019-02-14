@@ -10,28 +10,36 @@ import en_core_web_sm
 import pymongo
 from pymongo import MongoClient
 import db
+import pandas as pd
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    tweet = "Leicester keen on Portos Pereira: Leicester City are interested in signing Porto right back Ricardo Pereira , Sky Sports News has learned, as Claude Puel considers options to strengthen his defence this summer"
-    entities = get_entities(tweet)
-    pplayers = get_potential_players(entities)
-    pclubs = get_potential_clubs(entities)
-    x = make_player_queries(pplayers)
-    player_hit = query_db(x)
-    process_tweet(tweet, player_hit[0], pclubs)
-    print("--------------------------------")
-    
+    print("hi")
+    process_tweet()
 
 
-def process_tweet(tweet, hit, pclubs):
+def process_tweet():
+    coll = transferdb["labelled_tweets"]
+    df_transfer_true = pd.read_csv("info/true_data_set.csv", sep=';', error_bad_lines=False, encoding="utf-8")
+    for i, row in df_transfer_true.iterrows():
+        tweet_text = row["text"]
+        username = row["username"]
+        entities = get_entities(tweet_text)
+        pplayers = get_potential_players(entities)
+        pclubs = get_potential_clubs(entities)
+        x = make_player_queries(pplayers)
+        player_hit = query_db(x)
+        if len(player_hit)>0:
+            process_tweet_text(username,tweet_text, player_hit[0], pclubs)
+
+def process_tweet_text(tweet, hit, pclubs):
     coll = transferdb["labelled_tweets"]
     for i in pclubs:
         if hit['Moving to'] == i:
-            print i
-            entry = {"tweet_text": tweet, "label":"True"}
+            print(hit["Name"] + " to " + i)
+            entry = {"username": username.strip(), "tweet_text": tweet.strip(), "label":"True"}
             coll.insert_one(entry)
 
 def verify_label(cursor):
@@ -51,7 +59,6 @@ def get_potential_clubs(ents):
         if j == "ORG" or j== "GPE" or j=="NORP":
             potentials.append(i)
     return potentials
-
 
 def preprocess(sent):
     sent = nltk.word_tokenize(sent)
