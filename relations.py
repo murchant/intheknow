@@ -17,8 +17,9 @@ def main():
 def find_top_tweeters():
     coll = transferdb["true_transfers"]
     df = pd.DataFrame(list(coll.find()))
-    test = df['username'].mode()
+    test = df['username'].value_counts()
     print(test)
+    return test
 
 
 ###### TRUE TWEET FUNCTIONS ######
