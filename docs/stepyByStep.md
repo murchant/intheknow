@@ -48,11 +48,22 @@ Knowledge Base was created to store a collection of known successful transfers a
 
 #### Entity Recognition
 - **Created ner.py:** Uses SpaCy for entity recognition.
-
+- Processes tweet text and extracts entities from them. Does further processing to check whether claim came true or not, then stores in database with label accordingly.
 
 #### DataBase setup:
+- **Created db.py**
 - Running mongodb as local store
 - Created true rels store
 - transferdb:
     - player database
     - true transfers database
+    - clubdb
+
+#### False Rumour
+- Theory:
+    - Have collection of know true rumours.
+    - Use this data to retrieve accounts which tweet the most about transfer rumours.
+    - Use them and find most frequently occurring transfer rumours (Zipf distribution implementation possibly)
+    - Retrieve tweet from that account:
+          - If (not already known true) & (contains player mapped to club) & (not in known true transfers):
+                fake_collection.add(rumour tweet)
