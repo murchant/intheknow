@@ -1,10 +1,27 @@
 import csv
 import pandas as pd
+import pymongo
+from pymongo import MongoClient
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+transferdb = myclient["transferdb"]
 
 def main():
-    get_true_rels()
+    # get_true_rels()
     # make_true_qterms()
+    find_top_tweeters()
 
+
+###### FALSE TWEET FUNCTIONS ######
+
+def find_top_tweeters():
+    coll = transferdb["true_transfers"]
+    df = pd.DataFrame(list(coll.find()))
+    test = df['username'].mode()
+    print(test)
+
+
+###### TRUE TWEET FUNCTIONS ######
 
 def get_true_rels():
     with open('info/relationships.csv', mode='w') as rels:
