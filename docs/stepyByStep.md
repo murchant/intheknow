@@ -49,6 +49,11 @@ Knowledge Base was created to store a collection of known successful transfers a
 #### Entity Recognition
 - **Created ner.py:** Uses SpaCy for entity recognition.
 - Processes tweet text and extracts entities from them. Does further processing to check whether claim came true or not, then stores in database with label accordingly.
+- First round (*runtime*: approx 2.5 hrs): 2726/8267 were labelled. Conducted on true set.
+    - **Reason:** SpaCy having trouble defining Zlatan as person. (GPE, ORG). Also *Zlatan* more commonly used that his full name.
+    - **Possible Solution:** check for players as ORG's and GPE's as well. Clubs wrongfully identified will be disregarded on DB check. But still all Zlatan tweets, hence such a large skew in successful labels.
+    - **Second name solution:** have a player to name synonym collection. Most simple form: *use just second name a query*.
+- Second round (*runtime*: started @ 2.5hrs ): 5564/8267
 
 #### DataBase setup:
 - **Created db.py**
