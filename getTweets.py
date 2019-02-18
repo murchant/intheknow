@@ -15,7 +15,8 @@ def combine_tweets():
     df_short = pd.read_csv("info/trueShorter.csv", sep=';', error_bad_lines=False, low_memory=False)
     print(len(df_long.index))
     print(len(df_short.index))
-    df_left_outer = pd.merge(df_short, df_long, on='text', how="outer")
+    # df_left_outer = pd.merge(df_short, df_long, on='text', how="outer")
+    df_left_outer = pd.concat([df_short, df_long])
     df_left_outer.to_csv("info/true_data_set.csv")
     print(len(df_left_outer.index))
 
