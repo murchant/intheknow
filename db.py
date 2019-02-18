@@ -7,13 +7,19 @@ def main():
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
     transferdb = myclient["transferdb"]
     # DATABASE SETUP
+    # path = "info/true_data_set.csv"
+    # path2 = "info/transfers2018.csv"
+    # store_data(transferdb, path)
+    # make_player_db(transferdb, path2)
+    # make_transfer_db(transferdb, path2)
     # reset_collections(transferdb)
     coll_list=transferdb.list_collection_names()
+    print(coll_list)
 
 
 def store_data(transferdb, path):
     mycol = transferdb["true_transfers"]
-    df_transfer_true = pd.read_csv(path, sep=';', error_bad_lines=False, encoding="utf-8")
+    df_transfer_true = pd.read_csv(path, sep=',', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
         entry = {"username": row['username'].strip(), "date": row['date'].strip(), "text": row['text'].strip()}
         mycol.insert_one(entry)

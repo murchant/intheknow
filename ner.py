@@ -22,19 +22,21 @@ def main():
 
 def process_tweet():
     coll = transferdb["labelled_tweets"]
-    df_transfer_true = pd.read_csv("info/true_data_set.csv", sep=';', error_bad_lines=False, encoding="utf-8")
+    df_transfer_true = pd.read_csv("info/true_data_set.csv", sep=',', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
         tweet_text = row["text"]
         username = row["username"]
         entities = get_entities(tweet_text)
+
         pplayers = get_potential_players(entities)
         pclubs = get_potential_clubs(entities)
         x = make_player_queries(pplayers)
         player_hit = query_db(x)
+        print("here")
         if len(player_hit)>0:
             process_tweet_text(username,tweet_text, player_hit[0], pclubs)
 
-def process_tweet_text(tweet, hit, pclubs):
+def process_tweet_text(username,tweet, hit, pclubs):
     coll = transferdb["labelled_tweets"]
     for i in pclubs:
         if hit['Moving to'] == i:
@@ -67,9 +69,9 @@ def preprocess(sent):
 
 def get_entities(text):
     ents=[]
-    u = unicode(text, 'utf-8')
+    # u = unicode(text, 'utf-8')
     nlp = en_core_web_sm.load()
-    doc = nlp(u)
+    doc = nlp(text)
     # pprint([(X.text, X.label_) for X in doc.ents])
     for i in doc.ents:
         ents.append((i.text, i.label_))
