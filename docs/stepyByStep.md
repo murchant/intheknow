@@ -72,3 +72,13 @@ Knowledge Base was created to store a collection of known successful transfers a
     - Retrieve tweet from that account:
           - If (not already known true) & (contains player mapped to club) & (not in known true transfers):
                 fake_collection.add(rumour tweet)
+- **relations.py updates:** functions to receive top football tweeting accounts and to and commands to receive their tweets within a period. Run 1 false_cmds.txt: (12:05 - 1:30 ish)
+
+- process_tweet() run 1:
+      - Labelled true before 5564/8267.
+      - Labelled false before 0/22731 possibles.
+      - start @ 2:20
+    - **STOPPED** due to staggering amount of false false's.
+      - clubs synonyms
+      - tweets talking about "rejected transfers"
+      - SpaCy not recognising clubs eg: "Reading", "Colchester united"

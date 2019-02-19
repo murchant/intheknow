@@ -11,13 +11,19 @@ def main():
     # get_true_rels()
     # make_true_qterms()
     top_tweeters = find_top_tweeters()
-
-    print(top_tweeters[1])
-
+    make_false_commands(top_tweeters)
 
 
 
 ###### FALSE TWEET FUNCTIONS ######
+
+def make_false_commands(tweeters):
+    file = open("twitter_queries/false_cmds.txt",'w')
+    for i in tweeters:
+        cmd = 'python ../GetOldTweets/Exporter.py --username "' +  i  + '" --since 2018-05-17 --until 2018-08-09 --output ../info/possible_false.csv &'
+        file.write(cmd+"\n")
+    file.close()
+    return
 
 def find_top_tweeters():
     coll = transferdb["true_transfers"]
@@ -61,8 +67,8 @@ def generate_ways(transfer, type):
             variations.append(query_term)
     return (variations, transfer[3])
 
-def make_commands():
-    file = open("twitter_queries/cmds.txt",'w')
+def make_true_commands():
+    file = open("twitter_queries/true_cmds.txt",'w')
     player_rels = make_true_qterms("0")
     wait_break=0
     for i in player_rels:
@@ -74,7 +80,7 @@ def make_commands():
             if wait_break%20==0:
                 file.write("wait"+"\n")
     file.close()
-    file = open("twitter_queries/cmdsShorter.txt",'w')
+    file = open("twitter_queries/true_cmds_shorter.txt",'w')
     player_rels = make_true_qterms("1")
     for i in player_rels:
         for j in i[0]:

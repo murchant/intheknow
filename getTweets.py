@@ -4,7 +4,7 @@ import pandas as pd
 
 def main():
     # relations.get_true_rels()
-    # relations.make_commands()
+    # relations.make_true_commands()
     combine_tweets()
     print("Commands made")
 
