@@ -2,6 +2,7 @@ import csv
 import pandas as pd
 import pymongo
 from pymongo import MongoClient
+import numpy as np
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
@@ -9,7 +10,11 @@ transferdb = myclient["transferdb"]
 def main():
     # get_true_rels()
     # make_true_qterms()
-    find_top_tweeters()
+    top_tweeters = find_top_tweeters()
+
+    print(top_tweeters[1])
+
+
 
 
 ###### FALSE TWEET FUNCTIONS ######
@@ -17,9 +22,8 @@ def main():
 def find_top_tweeters():
     coll = transferdb["true_transfers"]
     df = pd.DataFrame(list(coll.find()))
-    test = df['username'].value_counts()
-    print(test)
-    return test
+    sorted_series = df["username"].value_counts()
+    return sorted_series.index[0:5]
 
 
 ###### TRUE TWEET FUNCTIONS ######

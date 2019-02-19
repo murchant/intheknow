@@ -27,14 +27,12 @@ def process_tweet():
         tweet_text = row["text"]
         username = row["username"]
         entities = get_entities(tweet_text)
-
         pplayers = get_potential_players(entities)
         pclubs = get_potential_clubs(entities)
         x = make_player_queries(pplayers)
         player_hit = query_db(x)
-        print("here")
         if len(player_hit)>0:
-            process_tweet_text(username,tweet_text, player_hit[0], pclubs)
+            process_tweet_text(username, tweet_text, player_hit[0], pclubs)
 
 def process_tweet_text(username,tweet, hit, pclubs):
     coll = transferdb["labelled_tweets"]
@@ -51,7 +49,7 @@ def verify_label(cursor):
 def get_potential_players(ents):
     potentials=[]
     for (i,j) in ents:
-        if j == "PERSON":
+        if j == "PERSON" or "ORG" or j== "GPE":
             potentials.append(i)
     return potentials
 
