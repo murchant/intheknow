@@ -3,8 +3,10 @@ from pymongo import MongoClient
 import pandas as pd
 from pprint import pprint
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+
 def main():
-    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+
     transferdb = myclient["transferdb"]
     # DATABASE SETUP
     # path = "info/true_data_set.csv"
@@ -13,9 +15,35 @@ def main():
     # make_player_db(transferdb, path2)
     # make_transfer_db(transferdb, path2)
     # reset_collections(transferdb)
+    # make_club_db(transferdb, path2)
+    # synonym_db()
     coll_list=transferdb.list_collection_names()
-    print(coll_list)
+    coll = transferdb["club_syns"]
+    df = pd.DataFrame(list(coll.find()))
+    for i, row in df.iterrows():
+        print(row["syns"])
 
+
+
+def synonym_db():
+    transferdb = myclient["transferdb"]
+    clubcoll = transferdb["clubs"]
+    syncoll = transferdb["club_syns"]
+    df = pd.DataFrame(list(clubcoll.find()))
+
+    for index, row in df.iterrows():
+        entry = {"club": row["Name"], "syns": generate_syns(row["Name"])}
+        syncoll.insert_one(entry)
+
+# Generate club synonyms by simply rearranging their official name
+
+def generate_syns(club):
+    components = club.split(" ")
+    syns = []
+    for i in components:
+        if (i is not "FC") or (i is not "AFC") or (i is not "Town"):
+            syns.append(i)
+    return syns
 
 def store_data(transferdb, path):
     mycol = transferdb["true_transfers"]
@@ -39,8 +67,8 @@ def make_club_db(transferdb, path):
     coll = transferdb["clubs"]
     df_transfer_true = pd.read_csv(path, sep=',', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
-        entry1 = {"Moving from": row['Name'].strip()}
-        entry2 = {"Moving to": row['Name'].strip()}
+        entry1 = {"Name": row["Moving from"].strip()}
+        entry2 = {"Name": row["Moving to"].strip()}
         coll.insert_one(entry1)
         coll.insert_one(entry2)
     return
