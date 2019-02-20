@@ -74,7 +74,7 @@ Knowledge Base was created to store a collection of known successful transfers a
                 fake_collection.add(rumour tweet)
 - **relations.py updates:** functions to receive top football tweeting accounts and to and commands to receive their tweets within a period. Run 1 false_cmds.txt: (12:05 - 1:30 ish)
 
-- process_tweet() run 1:
+- **process_tweet() run 1:**
       - Labelled true before 5564/8267.
       - Labelled false before 0/22731 possibles.
       - start @ 2:20
@@ -84,3 +84,21 @@ Knowledge Base was created to store a collection of known successful transfers a
       - SpaCy not **recognising** clubs eg: "Reading", "Colchester united", "Barnsley", "Swansea", "Morecambe", "Middlesbrough"
       - **Hashtags** were being interpreted as money, so made hashtag_remover()
       - **Duplicate** entries into db eg (Jordan Williams from Liverpool and Jordan Williams from Huddersfield town) *solution:* (not that big of deal and can just do a run through of every duplicates at end)
+
+- **process_tweet() run 2:**
+      - 5678/6274 labelled false
+      - Manually sampled 100.... 34/100 were wrongly labelled false due to reasons explained above.
+      - Problems:
+      - Worlds cup teams
+            - world cup news
+            - Contract renewals
+            - Manager appointing
+            - Leaving club, to a club but not both clubs listed.
+            - Negatives eg : Barcelona not interested in signing
+            - Vague tweets, “Barcelona are looking for a midfielder”
+            - Loan deals (easy fix just include loan data)
+            - Unveiled new kit.
+            - Europa, Champions draw
+            - Starting XI, 15
+
+            Note: A lot of reporting like this “Roma sporting director Monchi has insisted the club have not received any offers for goalkeeper Alisson Becker. The Brazilian international is reportedly a summer transfer target for Real Madrid and Liverpool, but the Italian club have rejected this talk” But even though its reporting, what the report is implying is false.
