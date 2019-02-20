@@ -79,6 +79,8 @@ Knowledge Base was created to store a collection of known successful transfers a
       - Labelled false before 0/22731 possibles.
       - start @ 2:20
     - **STOPPED** due to staggering amount of false false's.
-      - clubs synonyms
-      - tweets talking about "rejected transfers"
-      - SpaCy not recognising clubs eg: "Reading", "Colchester united"
+      - clubs synonyms ✅ fixed club_syn db
+      - tweets talking about *"rejected transfers"*
+      - SpaCy not **recognising** clubs eg: "Reading", "Colchester united", "Barnsley", "Swansea", "Morecambe", "Middlesbrough"
+      - **Hashtags** were being interpreted as money, so made hashtag_remover()
+      - **Duplicate** entries into db eg (Jordan Williams from Liverpool and Jordan Williams from Huddersfield town) *solution:* (not that big of deal and can just do a run through of every duplicates at end)
