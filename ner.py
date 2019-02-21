@@ -16,8 +16,11 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    # print("hi")
+    # get_entities("Reading are interested in signing Barnsley defender Andy Yiadom on a free transfer #ReadingFC #BarnsleyFC pic.twitter.com/K45MEvqJvI,,,#ReadingFC")
+    #
+    # nltk_method("Reading are interested in signing Barnsley defender Andy Yiadom on a free transfer #ReadingFC #BarnsleyFC pic.twitter.com/K45MEvqJvI,,,#ReadingFC")
     process_tweet()
+
 
 
 def process_tweet():
@@ -26,48 +29,60 @@ def process_tweet():
     for i, row in df_transfer_true.iterrows():
         tweet_text = row["text"]
         username = row["username"]
-        entities = get_entities(tweet_text)
+        print("--------------------")
+        entities = get_entities(hashtag_remover(tweet_text))
         pplayers = get_potential_players(entities)
         pclubs = get_potential_clubs(entities)
         x = make_player_queries(pplayers)
         player_hit = query_confirmed_db(x)
         print("Iteration: " + str(i))
-        if len(player_hit)>0:
-            process_tweet_text(username, tweet_text, player_hit[0], pclubs)
-        else:
-            # TODO check for club  synonym
-            # TODO check for player  synonym
-            coll_false = transferdb["labelled__false_tweets"]
-            entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
-            coll_false.insert_one(entry)
+        if noise_filter(tweet_text)==True:
+            if len(player_hit)>0:
+                process_tweet_text(username, tweet_text, player_hit[0], pclubs)
+            else:
+                # TODO check for player  synonym
+                coll_false = transferdb["labelled__false_tweets"]
+                entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
+                coll_false.insert_one(entry)
 
 
 def process_tweet_text(username,tweet, hit, pclubs):
     coll_true = transferdb["labelled_tweets"]
     coll_false = transferdb["labelled__false_tweets"]
+    club_syns = transferdb["club_syns"]
     # TODO: check if tweet date is behind official move
     # TODO: handle negative tweets like ones containing "rejected"
-    # TODO check for club  synonym
-    # TODO check for player  synonym
-    if hit['Moving to'] in pclubs:
+    # TODO: check for player  synonym
+
+    if club_check(hit['Moving to'], pclubs):
         for i in pclubs:
-            if hit['Moving to'] == i:
-                # print(hit["Name"] + " to " + i)
-                entry = {"username": username.strip(), "tweet_text": tweet.strip(), "label":"True"}
-                coll_true.insert_one(entry)
-                return
-    elif hit['Moving to'] not in pclubs:
+            entry = {"username": username.strip(), "tweet_text": tweet.strip(), "label":"True"}
+            coll_true.insert_one(entry)
+            return
+    else:
         print(hit["Name"] + " possible rumour")
         print(tweet)
+        print(hit)
         entry = {"username": username.strip(), "tweet_text": tweet.strip(), "label":"False"}
         coll_false.insert_one(entry)
 
 
+def noise_filter(text):
+    if ("rejected" in text) or ("turned down" in text) or ("XI" in text) or ("kit" in text) or ("renewed" in text) or ("renew" in text) or ("extension" in text) or ("more years" in text) or ("not interested" in text) or ("appointed manager" in text):
+        return False
+    else:
+        return True
 
-
-
-def verify_label(cursor):
-    print(cursor["Moving to"])
+def club_check(cname, pclist):
+    # club_syns = transferdb["club_syns"]
+    syn_list = db.query_collection({"club":cname}, "club_syns", transferdb)
+    if cname in pclist:
+        return True
+    else:
+        for i in syn_list:
+            if i in pclist:
+                return True
+    return False
 
 
 def get_potential_players(ents):
@@ -80,7 +95,7 @@ def get_potential_players(ents):
 def get_potential_clubs(ents):
     potentials=[]
     for (i,j) in ents:
-        if j == "ORG" or j== "GPE" or j=="NORP":
+        if j == "ORG" or j== "GPE" or j=="NORP" or j=="PERSON":
             potentials.append(i)
     return potentials
 
@@ -114,7 +129,12 @@ def query_confirmed_db(qs):
             for i in x:
                 # print("Hit!: "+ i["Name"])
                 actual_player.append(i)
+    # print(actual_player)
     return actual_player
+
+def hashtag_remover(text):
+    cleaned = text.replace("#", "")
+    return cleaned
 
 
 def nltk_method(str):
