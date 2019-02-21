@@ -13,8 +13,6 @@ def main():
     top_tweeters = find_top_tweeters()
     make_false_commands(top_tweeters)
 
-
-
 ###### FALSE TWEET FUNCTIONS ######
 
 def make_false_commands(tweeters):
@@ -41,6 +39,11 @@ def get_true_rels():
             csv_reader = csv.reader(transfers, delimiter=',')
             for row in csv_reader:
                 rel_writer.writerow([row[1], row[2], row[3], row[0]])  # player, from club, to club, date
+        with open('info/loans2018.csv') as transfers:
+            csv_reader = csv.reader(transfers, delimiter=',')
+            for row in csv_reader:
+                rel_writer.writerow([row[1], row[2], row[3], row[0]])  # player, from club, to club, date
+    return
 
 
 def make_true_qterms(type):
@@ -73,7 +76,7 @@ def make_true_commands():
     wait_break=0
     for i in player_rels:
         for j in i[0]:
-            term = '"' + j + '"'
+            term = '"' + j.strip() + '"'
             cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2017-09-01 --until " +date_changer(i[1]) + " --output ../info/true.csv &"
             file.write(cmd+"\n")
             wait_break=wait_break+1
@@ -84,7 +87,7 @@ def make_true_commands():
     player_rels = make_true_qterms("1")
     for i in player_rels:
         for j in i[0]:
-            term = '"' + j + '"'
+            term = '"' + j.strip() + '"'
             cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2017-09-01 --until " +date_changer(i[1]) + " --output ../info/trueShorter.csv &"
             file.write(cmd+"\n")
             wait_break=wait_break+1
