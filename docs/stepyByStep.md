@@ -102,3 +102,13 @@ Knowledge Base was created to store a collection of known successful transfers a
             - Starting XI, 15
 
             Note: A lot of reporting like this “Roma sporting director Monchi has insisted the club have not received any offers for goalkeeper Alisson Becker. The Brazilian international is reportedly a summer transfer target for Real Madrid and Liverpool, but the Italian club have rejected this talk” But even though its reporting, what the report is implying is false.
+
+- **process_tweet() run 3:**
+      - Difference = *noise_filter*, filter out world cups news, manger news, contract negotiations.
+      - 13:30 - 16:00. Stopped at 8259 due to trying to perform .replace() on float.
+      - 7455/8259 labelled false
+      - Club Probelms:
+          - West Ham united
+
+- **switch up, cause too much noise in data**
+- **new method:** retrieve tweets from top true tweeters and filter those to transfer news based on terms.

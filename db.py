@@ -9,22 +9,22 @@ def main():
 
     transferdb = myclient["transferdb"]
     # DATABASE SETUP
-    path = "info/true_data_set.csv"
-    path2 = "info/transfers2018.csv"
-    store_data(transferdb, path)
-    make_player_db(transferdb, path2)
-    make_transfer_db(transferdb, path2)
-    make_player_db(transferdb, path2)
-    # reset_collections(transferdb)
-    make_club_db(transferdb, path2)
-    synonym_db()
+    # path = "info/true_data_set.csv"
+    # path2 = "info/transfers2018.csv"
+    # store_data(transferdb, path)
+    # make_player_db(transferdb, path2)
+    # make_transfer_db(transferdb, path2)
+    # make_player_db(transferdb, path2)
+    # # reset_collections(transferdb)
+    # make_club_db(transferdb, path2)
+    # synonym_db()
     coll = transferdb["labelled__false_tweets"]
-    # curs = coll.find({})
-    # for doc in curs:
-    #     pprint(doc)
-    coll_list=transferdb.list_collection_names()
-    print(coll_list)
+    curs = coll.find({})
+    for doc in curs:
+        pprint(doc)
     print(coll.count())
+    # coll_list=transferdb.list_collection_names()
+    # print(coll_list)
     # coll = transferdb["club_syns"]
     # df = pd.DataFrame(list(coll.find()))
     # for i, row in df.iterrows():

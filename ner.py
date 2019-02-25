@@ -10,7 +10,9 @@ import en_core_web_sm
 import pymongo
 from pymongo import MongoClient
 import db
+import math
 import pandas as pd
+from six import string_types
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
@@ -19,13 +21,39 @@ def main():
     # get_entities("Reading are interested in signing Barnsley defender Andy Yiadom on a free transfer #ReadingFC #BarnsleyFC pic.twitter.com/K45MEvqJvI,,,#ReadingFC")
     #
     # nltk_method("Reading are interested in signing Barnsley defender Andy Yiadom on a free transfer #ReadingFC #BarnsleyFC pic.twitter.com/K45MEvqJvI,,,#ReadingFC")
+    # filter_pfalse()
     process_tweet()
 
+
+def filter_pfalse():
+    coll_true = transferdb["pfalse_ttalk"]
+    df_pfalse = pd.read_csv("info/possible_false.csv", sep=';', error_bad_lines=False, encoding="utf-8")
+    print(len(df_pfalse.index))
+    for i, row in df_pfalse.iterrows():
+        tweet_text = row["text"]
+        username = row["username"]
+        if(i>len(df_pfalse.index)):
+            break
+        if transfer_talk_check(tweet_text)==False:
+            df_pfalse = df_pfalse.drop(df_pfalse.index[i])
+    df_pfalse.to_csv("info/filtered_pfalse.csv", encoding='utf-8', sep=';')
+    print(len(df_pfalse.index))
+
+
+
+def transfer_talk_check(text):
+
+    if(isinstance(text, basestring)):
+
+        if ("transfer" in text) or ("medical" in text) or ("signing" in text) or ("verge" in text) or ("complete" in text) or ("accepted" in text) or ("transfer news" in text) or ("in talks" in text) or ("arrived" in text) or ("move" in text) or ("loan" in text) or ("agree" in text) or ("target" in text) or ("transfer window" in text):
+            return True
+        else:
+            return False
 
 
 def process_tweet():
     # CHECK DELIMETER
-    df_transfer_true = pd.read_csv("info/possible_false.csv", sep=';', error_bad_lines=False, encoding="utf-8")
+    df_transfer_true = pd.read_csv("info/filtered_pfalse.csv", sep=';', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
         tweet_text = row["text"]
         username = row["username"]
@@ -65,6 +93,10 @@ def process_tweet_text(username,tweet, hit, pclubs):
         print(hit)
         entry = {"username": username.strip(), "tweet_text": tweet.strip(), "label":"False"}
         coll_false.insert_one(entry)
+
+
+
+
 
 
 def noise_filter(text):
@@ -133,8 +165,11 @@ def query_confirmed_db(qs):
     return actual_player
 
 def hashtag_remover(text):
-    cleaned = text.replace("#", "")
-    return cleaned
+    if(isinstance(text, string_types)):
+        cleaned = text.replace("#", "")
+        return cleaned
+    else:
+        return text
 
 
 def nltk_method(str):
