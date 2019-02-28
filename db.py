@@ -8,16 +8,7 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 def main():
 
     transferdb = myclient["transferdb"]
-    # DATABASE SETUP
-    # path = "info/true_data_set.csv"
-    # path2 = "info/transfers2018.csv"
-    # store_data(transferdb, path)
-    # make_player_db(transferdb, path2)
-    # make_transfer_db(transferdb, path2)
-    # make_player_db(transferdb, path2)
-    # # reset_collections(transferdb)
-    # make_club_db(transferdb, path2)
-    # synonym_db()
+    reset_collections(transferdb)
     coll = transferdb["labelled__false_tweets"]
     curs = coll.find({})
     for doc in curs:
@@ -110,6 +101,9 @@ def reset_collections(transferdb):
     store_data(transferdb, path)
     make_player_db(transferdb, path2)
     make_transfer_db(transferdb, path2)
+    make_player_db(transferdb, path2)
+    make_club_db(transferdb, path2)
+    synonym_db()
     coll_list=transferdb.list_collection_names()
     print(coll_list)
 
