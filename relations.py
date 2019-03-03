@@ -11,15 +11,18 @@ def main():
     # get_true_rels()
     # make_true_qterms()
     top_tweeters = find_top_tweeters()
-    make_false_commands(top_tweeters)
+    blacklist = ["ouggi", "TheBoxingBrits", "Footballs1news", "sportsupdatefbb"]
+    make_false_commands(top_tweeters, blacklist)
 
 ###### FALSE TWEET FUNCTIONS ######
 
-def make_false_commands(tweeters):
+def make_false_commands(tweeters, blacklist):
     file = open("twitter_queries/false_cmds.txt",'w')
     for i in tweeters:
-        cmd = 'python ../GetOldTweets/Exporter.py --username "' +  i  + '" --since 2018-05-17 --until 2018-08-09 --output ../info/possible_false.csv &'
+        if i not in blacklist:
+            cmd = 'python ../GetOldTweets/Exporter.py --username "' +  i  + '" --since 2018-06-09 --until 2018-08-31 --output ../info/possible_false.csv &'
         file.write(cmd+"\n")
+    file.write("exit1\n")
     file.close()
     return
 

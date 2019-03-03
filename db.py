@@ -6,20 +6,17 @@ from pprint import pprint
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
 def main():
-
     transferdb = myclient["transferdb"]
-    reset_collections(transferdb)
-    coll = transferdb["labelled__false_tweets"]
-    curs = coll.find({})
-    for doc in curs:
-        pprint(doc)
-    print(coll.count())
-    # coll_list=transferdb.list_collection_names()
-    # print(coll_list)
-    # coll = transferdb["club_syns"]
-    # df = pd.DataFrame(list(coll.find()))
-    # for i, row in df.iterrows():
-    #     print(row["syns"])
+    # coll = transferdb["clubs"]
+    # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
+    # coll.insert_one(entry1)
+    # reset_collections(transferdb)
+    # coll = transferdb["labelled__false_tweets"]
+    # curs = coll.find({})
+    # for doc in curs:
+    #     pprint(doc)
+    manually_add_club(transferdb, "Tottenham Hotspur", "Spurs")
+
 
 
 
@@ -32,8 +29,7 @@ def synonym_db():
     for index, row in df.iterrows():
         entry = {"club": row["Name"], "syns": generate_syns(row["Name"])}
         syncoll.insert_one(entry)
-
-# Generate club synonyms by simply rearranging their official name
+    manual_clubs
 
 def generate_syns(club):
     components = club.split(" ")
@@ -106,6 +102,35 @@ def reset_collections(transferdb):
     synonym_db()
     coll_list=transferdb.list_collection_names()
     print(coll_list)
+
+
+def manually_add_club(transferdb, club, val):
+    coll = transferdb["club_syns"]
+    query = {"club": club}
+
+    entry = coll.find_one(query)
+    # new_entry = [entry["syns"]].append(val)
+    upval = {"$set": {"syns": val}}
+    print("BEFORE: ")
+    print(entry)
+    coll.update_one(query, upval, upsert=False)
+    list = coll.find_one(query)
+    print("AFTER: ")
+    print(list)
+
+def manual_clubs(transferdb):
+    coll = transferdb["clubs"]
+    entry1 = {"Name": "Tottenham", "syns":"Spurs"}
+    entry2 = {"Name": "Tottenham Hotspur", "syns":"Spurs"}
+    entry3 = {"Name": "Barcelona", "syns":"Barca"}
+    entry4 = {"Name": "Milton Keynes Dons", "syns":"MK Dons"}
+    entry4 = {"Name": "Fleetwood Town", "syns":"Fleetwood"}
+    entry4 = {"Name": "Wolverhampton Wanderers", "syns":"Wolves"}
+
+    coll.insert_one(entry1)
+    coll.insert_one(entry2)
+    coll.insert_one(entry3)
+    coll.insert_one(entry4)
 
 
 if __name__ == '__main__':
