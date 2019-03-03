@@ -114,3 +114,4 @@ Knowledge Base was created to store a collection of known successful transfers a
 - **new method:** retrieve tweets from top true tweeters and filter those to transfer news based on terms.
 - *Retrained* spacy english model to include club names and players which were not present before. very tedious.
 - Added retraining methods
+- False Quality Test (28/02/19):
