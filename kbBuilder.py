@@ -1,7 +1,7 @@
 import urllib2
 from bs4 import BeautifulSoup
 import csv
-
+import db
 
 def main():
     info2018 = get_transfers('https://en.wikipedia.org/wiki/List_of_English_football_transfers_summer_2018')

@@ -115,3 +115,7 @@ Knowledge Base was created to store a collection of known successful transfers a
 - *Retrained* spacy english model to include club names and players which were not present before. very tedious.
 - Added retraining methods
 - False Quality Test (28/02/19):
+
+- **process overhaul:** Dealing with international clubs toooo much. Need to restrict it to just English clubs.
+- Check if tweet contains English club or English club synonym.
+- Use this to make database

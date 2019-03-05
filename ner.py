@@ -17,7 +17,6 @@ from six import string_types
 import plac
 import random
 from pathlib import Path
-import spacy
 from spacy.util import minibatch, compounding
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -33,8 +32,10 @@ def main():
     # ex= ["Fenerbahce move would be a 'backwards step' for Jack Wilshere, says former Arsenal midfielder Adrian Clarke: Jack Wilshere has been urged not to join Fenerbahce this summer, as he would be taking a 'backwards step' in his career. Latest reports c", "Liverpool are keen on signing Arsenal midfielder Aaron Ramsey", "Arsenal boss Unai Emery is plotting a 25m move for Croatian defender", "Arsenal striker Lucas Perez has undergone a medical at West Ham", "Fulham sign Arsenal defender Calum Chambers on season-long loan", "Barcelona Transfer News: Ousmane Dembele Rules out Exit Amid Arsenal Rumours"]
 
     # retrain_nlp_model(unicode("Arsenal",encoding="utf-8"), ex)
-    retrain_batch(retrain_data2)
+    # retrain_batch(retrain_data2)
     # process_tweet()
+    test = english_club_check(["Spurs"])
+    print(test)
 
 
 def filter_pfalse():
@@ -77,15 +78,37 @@ def process_tweet():
         x = make_player_queries(pplayers)
         player_hit = query_confirmed_db(x)
         print("Iteration: " + str(i))
-        if noise_filter(tweet_text)==True:
-            if transfer_talk_check(tweet_text):
-                if len(player_hit)>0:
-                    process_tweet_text(username, tweet_text, player_hit[0], pclubs)
-                else:
-                    # TODO check for player synonym
-                    coll_false = transferdb["labelled__false_tweets"]
-                    entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
-                    coll_false.insert_one(entry)
+
+        if english_club_check(pclubs):
+            if noise_filter(tweet_text)==True:
+                if transfer_talk_check(tweet_text):
+                    if len(player_hit)>0:
+                        process_tweet_text(username, tweet_text, player_hit[0], pclubs)
+                    else:
+                        # TODO check for player synonym
+                        coll_false = transferdb["labelled__false_tweets"]
+                        entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
+                        coll_false.insert_one(entry)
+
+
+def english_club_check(clubs):
+    # for i in clubs:
+    #     query = {"Name:" i}
+    #     res = query_collection(query, "english_clubs", transferdb)
+    #     if len(res)>0:
+    #         return True
+
+    queryname = {"Name": {"$in": clubs}}
+    res = db.query_collection(queryname, "english_clubs", transferdb)
+
+    querysyn = {"syns": {"$in": clubs}}
+    ressyn = db.query_collection(querysyn, "english_clubs", transferdb)
+    if res.count() > 0:
+        return res[0]["Name"]
+    elif ressyn.count() > 0:
+        return ressyn[0]["Name"]
+    else:
+        return None
 
 
 def process_tweet_text(username,tweet, hit, pclubs):
@@ -149,7 +172,7 @@ def preprocess(sent):
 def get_entities(text):
     ents=[]
     # u = unicode(text, 'utf-8')
-    nlp = en_core_web_sm.load()
+    nlp = spacy.load("./retrained_model")
     doc = nlp(text)
     # pprint([(X.text, X.label_) for X in doc.ents])
     for i in doc.ents:

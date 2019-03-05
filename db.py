@@ -2,21 +2,25 @@ import pymongo
 from pymongo import MongoClient
 import pandas as pd
 from pprint import pprint
+import urllib2
+from bs4 import BeautifulSoup
+import csv
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+transferdb = myclient["transferdb"]
 
 def main():
     transferdb = myclient["transferdb"]
     # coll = transferdb["clubs"]
     # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
     # coll.insert_one(entry1)
-    # reset_collections(transferdb)
-    # coll = transferdb["labelled__false_tweets"]
+    reset_collections(transferdb)
+    # coll = transferdb["english_clubs"]
     # curs = coll.find({})
     # for doc in curs:
     #     pprint(doc)
-    manually_add_club(transferdb, "Tottenham Hotspur", "Spurs")
-
+    # print(coll.count())
+    # make_english_clubs("https://en.wikipedia.org/wiki/List_of_football_clubs_in_England")
 
 
 
@@ -30,6 +34,28 @@ def synonym_db():
         entry = {"club": row["Name"], "syns": generate_syns(row["Name"])}
         syncoll.insert_one(entry)
     manual_clubs
+
+
+def make_english_clubs(qPage):
+    col = transferdb["english_clubs"]
+    quote_page = qPage
+    page = urllib2.urlopen(quote_page)
+    soup = BeautifulSoup(page, 'html.parser')
+    ar =  soup.find_all("tbody")
+    window = 0
+    for i in range(2, 26):
+        tables = ar[i].text.strip()
+        clubs = tables.split('\n\n')
+        for i in clubs:
+            list = i.split('\n')
+            if len(list)>1:
+                if int(list[3])<5:
+                    syns = generate_syns(list[1])
+                    [x.encode('utf-8') for x in syns]
+                    nicks = syns+[list[4].encode('utf-8')]
+                    entry = {"Name": list[1], "League": list[3], "syns": nicks}
+                    col.insert_one(entry)
+                    # print(entry)
 
 def generate_syns(club):
     components = club.split(" ")
@@ -67,6 +93,10 @@ def make_club_db(transferdb, path):
         coll.insert_one(entry2)
     return
 
+def make_club_dbt(entry):
+    coll = transferdb["clubs"]
+    coll.insert_one(entry)
+
 
 def make_transfer_db(transferdb, path):
     coll = transferdb["confirmed_transfers"]
@@ -99,6 +129,7 @@ def reset_collections(transferdb):
     make_transfer_db(transferdb, path2)
     make_player_db(transferdb, path2)
     make_club_db(transferdb, path2)
+    make_english_clubs("https://en.wikipedia.org/wiki/List_of_football_clubs_in_England")
     synonym_db()
     coll_list=transferdb.list_collection_names()
     print(coll_list)
