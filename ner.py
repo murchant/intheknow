@@ -33,9 +33,10 @@ def main():
 
     # retrain_nlp_model(unicode("Arsenal",encoding="utf-8"), ex)
     # retrain_batch(retrain_data2)
-    # process_tweet()
-    test = english_club_check(["Spurs"])
-    print(test)
+    process_tweet()
+    # res = english_club_check([u'Leeds', u'Caleb Ekuban', u'Trabzonspor'])
+    # print(res)
+    return
 
 
 def filter_pfalse():
@@ -52,8 +53,6 @@ def filter_pfalse():
     df_pfalse.to_csv("info/filtered_pfalse.csv", encoding='utf-8', sep=';')
     print(len(df_pfalse.index))
 
-
-
 def transfer_talk_check(text):
 
     if(isinstance(text, basestring)):
@@ -62,6 +61,23 @@ def transfer_talk_check(text):
         else:
             return False
 
+def english_club_check(clubs):
+    # for i in clubs:
+    #     query = {"Name:" i}
+    #     res = query_collection(query, "english_clubs", transferdb)
+    #     if len(res)>0:
+    #         return True
+
+    queryname = {"Name": {"$in": clubs}}
+    res = db.query_collection(queryname, "english_clubs", transferdb)
+    querysyn = {"syns": {"$in": clubs}}
+    ressyn = db.query_collection(querysyn, "english_clubs", transferdb)
+    if res.count() > 0:
+        return True # res[0]["Name"]
+    elif ressyn.count() > 0:
+        return True # ressyn[0]["Name"]
+    else:
+        return False
 
 def process_tweet():
     # CHECK DELIMETER
@@ -78,37 +94,20 @@ def process_tweet():
         x = make_player_queries(pplayers)
         player_hit = query_confirmed_db(x)
         print("Iteration: " + str(i))
-
-        if english_club_check(pclubs):
+        print(pclubs)
+        if english_club_check(pclubs)==True:
+            print("English club")
             if noise_filter(tweet_text)==True:
-                if transfer_talk_check(tweet_text):
+                if transfer_talk_check(tweet_text)==True:
                     if len(player_hit)>0:
                         process_tweet_text(username, tweet_text, player_hit[0], pclubs)
                     else:
                         # TODO check for player synonym
-                        coll_false = transferdb["labelled__false_tweets"]
-                        entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
-                        coll_false.insert_one(entry)
+                        if len(pplayers)>0:
+                            coll_false = transferdb["labelled__false_tweets"]
+                            entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
+                            coll_false.insert_one(entry)
 
-
-def english_club_check(clubs):
-    # for i in clubs:
-    #     query = {"Name:" i}
-    #     res = query_collection(query, "english_clubs", transferdb)
-    #     if len(res)>0:
-    #         return True
-
-    queryname = {"Name": {"$in": clubs}}
-    res = db.query_collection(queryname, "english_clubs", transferdb)
-
-    querysyn = {"syns": {"$in": clubs}}
-    ressyn = db.query_collection(querysyn, "english_clubs", transferdb)
-    if res.count() > 0:
-        return res[0]["Name"]
-    elif ressyn.count() > 0:
-        return ressyn[0]["Name"]
-    else:
-        return None
 
 
 def process_tweet_text(username,tweet, hit, pclubs):
@@ -138,6 +137,8 @@ def noise_filter(text):
     else:
         return True
 
+
+# Rethink how you're checking here, nicknames could be scraped
 def club_check(cname, pclist):
     # club_syns = transferdb["club_syns"]
     syn_list = db.query_collection({"club":cname}, "club_syns", transferdb)

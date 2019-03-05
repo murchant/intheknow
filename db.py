@@ -15,12 +15,11 @@ def main():
     # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
     # coll.insert_one(entry1)
     reset_collections(transferdb)
-    # coll = transferdb["english_clubs"]
-    # curs = coll.find({})
-    # for doc in curs:
-    #     pprint(doc)
-    # print(coll.count())
-    # make_english_clubs("https://en.wikipedia.org/wiki/List_of_football_clubs_in_England")
+        # coll = transferdb["labelled__false_tweets"]
+        # curs = coll.find({})
+        # for doc in curs:
+        #     pprint(doc)
+        # print(coll.count())
 
 
 
