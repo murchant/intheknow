@@ -119,3 +119,6 @@ Knowledge Base was created to store a collection of known successful transfers a
 - **process overhaul:** Dealing with international clubs toooo much. Need to restrict it to just English clubs.
 - Check if tweet contains English club or English club synonym.
 - Use this to make database
+
+- **Manual Intervention:** almost impossible to make script which will separate pure false tweets.
+- *New Method:* Stripped transfer talk tweets and manually remove wrongly labelled.

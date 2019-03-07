@@ -14,12 +14,12 @@ def main():
     # coll = transferdb["clubs"]
     # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
     # coll.insert_one(entry1)
-    reset_collections(transferdb)
-        # coll = transferdb["labelled__false_tweets"]
-        # curs = coll.find({})
-        # for doc in curs:
-        #     pprint(doc)
-        # print(coll.count())
+    # reset_collections(transferdb)
+    coll = transferdb["labelled__false_tweets"]
+    curs = coll.find({})
+    for doc in curs:
+            pprint(doc)
+    print(coll.count())
 
 
 
