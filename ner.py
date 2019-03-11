@@ -302,8 +302,5 @@ def nltk_method(str):
     ne_tree = ne_chunk(pos_tag(word_tokenize(ex)))
     print(ne_tree)
 
-
-
-
 if __name__ == '__main__':
     main()

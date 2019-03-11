@@ -12,7 +12,8 @@ def main():
     # make_true_qterms()
     top_tweeters = find_top_tweeters()
     blacklist = ["ouggi", "TheBoxingBrits", "Footballs1news", "sportsupdatefbb"]
-    make_false_commands(top_tweeters, blacklist)
+    print(top_tweeters)
+    # make_false_commands(top_tweeters, blacklist)
 
 ###### FALSE TWEET FUNCTIONS ######
 
@@ -30,7 +31,7 @@ def find_top_tweeters():
     coll = transferdb["true_transfers"]
     df = pd.DataFrame(list(coll.find()))
     sorted_series = df["username"].value_counts()
-    return sorted_series.index[0:8]
+    return sorted_series.index[0:10]
 
 
 ###### TRUE TWEET FUNCTIONS ######

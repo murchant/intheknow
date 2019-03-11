@@ -5,16 +5,17 @@ from pprint import pprint
 import urllib2
 from bs4 import BeautifulSoup
 import csv
+from bson.objectid import ObjectId
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    transferdb = myclient["transferdb"]
     # coll = transferdb["clubs"]
     # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
     # coll.insert_one(entry1)
     # reset_collections(transferdb)
+    correct_db("labelled__false_tweets", wrongly_labelled)
     coll = transferdb["labelled__false_tweets"]
     curs = coll.find({})
     for doc in curs:
@@ -22,7 +23,10 @@ def main():
     print(coll.count())
 
 
-def correct_db():
+def correct_db(name, idlist):
+    coll = transferdb[name]
+    for i in idlist:
+        coll.delete_one({"_id": ObjectId(i)})
 
 
 def synonym_db():
