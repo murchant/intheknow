@@ -17,11 +17,27 @@ def main():
     # reset_collections(transferdb)
     # correct_db("labelled__false_querys", wrongly_labelled2)
     # intersect_db()
-    coll = transferdb["labelled__false_querys"]
+    coll_list=transferdb.list_collection_names()
+    print(coll_list)
+
+    coll = transferdb["true_transfers"]
     curs = coll.find({})
     for doc in curs:
             pprint(doc)
     print(coll.count())
+
+    # merge_db("labelled__false_tweets", "labelled__false_querys")
+
+
+
+def merge_db(namekeep, namecol):
+    coll = transferdb[namecol]
+    collkeep = transferdb[namekeep]
+    df = pd.DataFrame(list(coll.find()))
+
+    for i, row in df.iterrows():
+        entry = entry = {"username": row['username'], "tweet_text": row["tweet_text"], "label":row["label"]}
+        collkeep.insert_one(entry)
 
 
 
@@ -239,7 +255,7 @@ wrongly_labelled2 = ["5c86d3d7e8e5df563b91eadc",
 "5c86efbbe8e5df563b91eb75", "5c86f090e8e5df563b91eb76",
 "5c86f092e8e5df563b91eb77", "5c86f094e8e5df563b91eb78",
 "5c86f096e8e5df563b91eb79", "5c86f120e8e5df563b91eb7b",
-"5c86f13ae8e5df563b91eb7c", "5c86f2b9e8e5df563b91eb99"
+"5c86f13ae8e5df563b91eb7c", "5c86f2b9e8e5df563b91eb99",
 "5c86f13de8e5df563b91eb7d", "5c86f13ee8e5df563b91eb7e",
 "5c86f13fe8e5df563b91eb7f", "5c86f146e8e5df563b91eb80",
 "5c86f149e8e5df563b91eb81", "5c86f156e8e5df563b91eb82",
@@ -296,7 +312,7 @@ wrongly_labelled2 = ["5c86d3d7e8e5df563b91eadc",
 "5c87000ee8e5df563b91ebfe","5c87000fe8e5df563b91ebff",
 "5c870012e8e5df563b91ec00","5c870012e8e5df563b91ec01",
 "5c870013e8e5df563b91ec02","5c870014e8e5df563b91ec03",
-"5c870015e8e5df563b91ec04","5c8705f6e8e5df563b91ec26"
+"5c870015e8e5df563b91ec04","5c8705f6e8e5df563b91ec26",
 "5c870016e8e5df563b91ec06","5c870150e8e5df563b91ec08",
 "5c870157e8e5df563b91ec09","5c870177e8e5df563b91ec0a",
 "5c8701b6e8e5df563b91ec0b","5c8701c4e8e5df563b91ec0c",
@@ -369,7 +385,7 @@ wrongly_labelled2 = ["5c86d3d7e8e5df563b91eadc",
 "5c87b6f9e8e5df5b9abcbcb7","5c87b9cbe8e5df5b9abcbcb8",
 "5c87ba28e8e5df5b9abcbcb9","5c87bbc9e8e5df5b9abcbcba",
 "5c87bfc0e8e5df5b9abcbcbd", "5c87c873e8e5df5b9abcbcc5",
-"5c87c8d2e8e5df5b9abcbcc6", ""]
+"5c87c8d2e8e5df5b9abcbcc6", "5c87cc34e8e5df5b9abcbcc7", "5c87c3b1e8e5df5b9abcbcc4"]
 
 if __name__ == '__main__':
     main()

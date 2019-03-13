@@ -10,18 +10,29 @@ transferdb = myclient["transferdb"]
 def main():
     # get_true_rels()
     # make_true_qterms()
-    top_tweeters = find_top_tweeters()
-    blacklist = ["ouggi", "TheBoxingBrits", "Footballs1news", "sportsupdatefbb"]
-    print(top_tweeters)
+    # top_tweeters = find_top_tweeters()
+    # top_tweeters = ["footyhlines", "roundclocksport", "SportsbookBTC"]
+    # blacklist = ["ouggi", "TheBoxingBrits", "Footballs1news", "sportsupdatefbb"]
+    # print(top_tweeters)
     # make_false_commands(top_tweeters, blacklist)
+    querys = ["Transfer news", "Done Deal have signed", "in the know signed", "#intheknow", "reports in talks with"]
+    general_query(querys)
 
 ###### FALSE TWEET FUNCTIONS ######
+
+def general_query(querys):
+    file = open("twitter_queries/query_cmds.txt",'w')
+    for i in querys:
+        cmd = 'python ../GetOldTweets/Exporter.py --query "' +  i  + '" --since 2018-06-09 --until 2018-08-31 --output ../info/query_terms.csv &'
+        file.write(cmd+"\n")
+    file.close()
+    return
 
 def make_false_commands(tweeters, blacklist):
     file = open("twitter_queries/false_cmds.txt",'w')
     for i in tweeters:
         if i not in blacklist:
-            cmd = 'python ../GetOldTweets/Exporter.py --username "' +  i  + '" --since 2018-06-09 --until 2018-08-31 --output ../info/possible_false.csv &'
+            cmd = 'python ../GetOldTweets/Exporter.py --username "' +  i  + '" --since 2018-06-09 --until 2018-08-31 --output ../info/possible2_false.csv &'
         file.write(cmd+"\n")
     file.write("exit1\n")
     file.close()
@@ -31,7 +42,7 @@ def find_top_tweeters():
     coll = transferdb["true_transfers"]
     df = pd.DataFrame(list(coll.find()))
     sorted_series = df["username"].value_counts()
-    return sorted_series.index[0:10]
+    return sorted_series.index[0:12]
 
 
 ###### TRUE TWEET FUNCTIONS ######

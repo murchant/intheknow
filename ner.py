@@ -82,8 +82,8 @@ def english_club_check(clubs):
 
 def process_tweet():
     # CHECK DELIMETER
-    df_transfer_true = pd.read_csv("info/possible_false.csv", sep=';', error_bad_lines=False, encoding="utf-8")
-    # df_transfer_true = df_transfer_true.drop(df_transfer_true.index[0:3434])
+    df_transfer_true = pd.read_csv("info/query_terms.csv", sep=';', error_bad_lines=False, encoding="utf-8")
+    df_transfer_true = df_transfer_true.drop(df_transfer_true.index[0:11199])
     for i, row in df_transfer_true.iterrows():
         tweet_text = row["text"]
         username = row["username"]
@@ -105,7 +105,7 @@ def process_tweet():
                     else:
                         # TODO check for player synonym
                         if len(pplayers)>0:
-                            coll_false = transferdb["labelled__false_tweets"]
+                            coll_false = transferdb["labelled__false_querys"]
                             entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
                             coll_false.insert_one(entry)
 
@@ -113,7 +113,7 @@ def process_tweet():
 
 def process_tweet_text(username,tweet, hit, pclubs):
     coll_true = transferdb["labelled_tweets"]
-    coll_false = transferdb["labelled__false_tweets"]
+    coll_false = transferdb["labelled__false_querys"]
     club_syns = transferdb["club_syns"]
     # TODO: check if tweet date is behind official move
     # TODO: handle negative tweets like ones containing "rejected"
@@ -122,7 +122,7 @@ def process_tweet_text(username,tweet, hit, pclubs):
     if club_check(hit['Moving to'], pclubs):
         for i in pclubs:
             entry = {"username": username.strip(), "tweet_text": tweet.strip(), "label":"True"}
-            coll_true.insert_one(entry)
+            # coll_true.insert_one(entry)
             return
     else:
         print(hit["Name"] + " possible rumour")
