@@ -63,11 +63,6 @@ def transfer_talk_check(text):
             return False
 
 def english_club_check(clubs):
-    # for i in clubs:
-    #     query = {"Name:" i}
-    #     res = query_collection(query, "english_clubs", transferdb)
-    #     if len(res)>0:
-    #         return True
 
     queryname = {"Name": {"$in": clubs}}
     res = db.query_collection(queryname, "english_clubs", transferdb)
@@ -82,8 +77,8 @@ def english_club_check(clubs):
 
 def process_tweet():
     # CHECK DELIMETER
-    df_transfer_true = pd.read_csv("info/query_terms.csv", sep=';', error_bad_lines=False, encoding="utf-8")
-    df_transfer_true = df_transfer_true.drop(df_transfer_true.index[0:11199])
+    df_transfer_true = pd.read_csv("info/query_terms_2017.csv", sep=';', error_bad_lines=False, encoding="utf-8")
+    df_transfer_true = df_transfer_true.drop(df_transfer_true.index[0:32252])
     for i, row in df_transfer_true.iterrows():
         tweet_text = row["text"]
         username = row["username"]
@@ -105,24 +100,21 @@ def process_tweet():
                     else:
                         # TODO check for player synonym
                         if len(pplayers)>0:
-                            coll_false = transferdb["labelled__false_querys"]
+                            coll_false = transferdb["labelled_false_2017"]
                             entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
                             coll_false.insert_one(entry)
 
 
 
 def process_tweet_text(username,tweet, hit, pclubs):
-    coll_true = transferdb["labelled_tweets"]
-    coll_false = transferdb["labelled__false_querys"]
+    coll_true = transferdb["labelled_true_2017"]
+    coll_false = transferdb["labelled__false_2017"]
     club_syns = transferdb["club_syns"]
-    # TODO: check if tweet date is behind official move
-    # TODO: handle negative tweets like ones containing "rejected"
-    # TODO: check for player  synonym
 
     if club_check(hit['Moving to'], pclubs):
         for i in pclubs:
             entry = {"username": username.strip(), "tweet_text": tweet.strip(), "label":"True"}
-            # coll_true.insert_one(entry)
+            coll_true.insert_one(entry)
             return
     else:
         print(hit["Name"] + " possible rumour")
@@ -270,7 +262,7 @@ def make_player_queries(names):
 def query_confirmed_db(qs):
     actual_player=[]
     for i in qs:
-        x = db.query_collection(i, "confirmed_transfers", transferdb)
+        x = db.query_collection(i, "confirmed_transfers_2017", transferdb)
         if x.count() > 0:
             for i in x:
                 # print("Hit!: "+ i["Name"])

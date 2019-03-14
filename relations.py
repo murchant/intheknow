@@ -15,7 +15,7 @@ def main():
     # blacklist = ["ouggi", "TheBoxingBrits", "Footballs1news", "sportsupdatefbb"]
     # print(top_tweeters)
     # make_false_commands(top_tweeters, blacklist)
-    querys = ["Transfer news", "Done Deal have signed", "in the know signed", "#intheknow", "reports in talks with"]
+    querys = ["Transfer news", "Done Deal have signed", "in the know signed", "#intheknow", "reports in talks with", "transfer bid"]
     general_query(querys)
 
 ###### FALSE TWEET FUNCTIONS ######
@@ -23,7 +23,7 @@ def main():
 def general_query(querys):
     file = open("twitter_queries/query_cmds.txt",'w')
     for i in querys:
-        cmd = 'python ../GetOldTweets/Exporter.py --query "' +  i  + '" --since 2018-06-09 --until 2018-08-31 --output ../info/query_terms.csv &'
+        cmd = 'python ../GetOldTweets/Exporter.py --query "' +  i  + '" --since 2017-06-09 --until 2017-08-31 --output ../info/query_terms_2017.csv &'
         file.write(cmd+"\n")
     file.close()
     return

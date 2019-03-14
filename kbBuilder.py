@@ -10,8 +10,8 @@ def main():
     info2017 = get_transfers('https://en.wikipedia.org/wiki/List_of_English_football_transfers_summer_2017')
     transfers_seventeen = info2017["transfers"]
     loans_seventeen = info2017["loans"]
-    write_info(transfers_eighteen, "transfers2018.csv")
-    write_info(loans_eighteen, "loans2018.csv")
+    # write_info(transfers_eighteen, "transfers2018.csv")
+    # write_info(loans_eighteen, "loans2018.csv")
     write_info(transfers_seventeen, "transfers2017.csv")
     write_info(loans_seventeen, "loans2017.csv")
 

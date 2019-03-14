@@ -2,7 +2,7 @@ import pymongo
 from pymongo import MongoClient
 import pandas as pd
 from pprint import pprint
-import urllib2
+# import urllib2
 from bs4 import BeautifulSoup
 import csv
 from bson.objectid import ObjectId
@@ -14,19 +14,15 @@ def main():
     # coll = transferdb["clubs"]
     # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
     # coll.insert_one(entry1)
-    # reset_collections(transferdb)
     # correct_db("labelled__false_querys", wrongly_labelled2)
-    # intersect_db()
     coll_list=transferdb.list_collection_names()
     print(coll_list)
+    # coll = transferdb["confirmed_transfers_2017"]
+    # curs = coll.find({})
+    # for doc in curs:
+    #         pprint(doc)
+    # print(coll.count())
 
-    coll = transferdb["true_transfers"]
-    curs = coll.find({})
-    for doc in curs:
-            pprint(doc)
-    print(coll.count())
-
-    # merge_db("labelled__false_tweets", "labelled__false_querys")
 
 
 
@@ -122,7 +118,7 @@ def make_club_dbt(entry):
 
 
 def make_transfer_db(transferdb, path):
-    coll = transferdb["confirmed_transfers"]
+    coll = transferdb["confirmed_transfers_2017"]
     df_transfer_true = pd.read_csv(path, sep=',', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
         entry = {"Date": row["Date"].strip(),"Name": row["Name"].strip(),"Moving from": row["Moving from"].strip(),"Moving to": row["Moving to"].strip(), "happened": True}
@@ -146,7 +142,7 @@ def reset_collections(transferdb):
     coll_list=transferdb.list_collection_names()
     print(coll_list)
     path = "info/true_data_set.csv"
-    path2 = "info/transfers2018.csv"
+    path2 = "info/transfers2017.csv"
     store_data(transferdb, path)
     make_player_db(transferdb, path2)
     make_transfer_db(transferdb, path2)
