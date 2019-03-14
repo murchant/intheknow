@@ -122,3 +122,8 @@ Knowledge Base was created to store a collection of known successful transfers a
 
 - **Manual Intervention:** almost impossible to make script which will separate pure false tweets.
 - *New Method:* Stripped transfer talk tweets and manually remove wrongly labelled.
+
+
+### Classification
+
+- Overview: initial plan is to start off with basic linear regression model. Then move onto more complex interpretations, like NNs, CNNs .... maybe something else if i've time
