@@ -22,7 +22,7 @@ def main():
     # for doc in curs:
     #         pprint(doc)
     # print(coll.count())
-    coll = transferdb["true_transfers"]
+    # coll = transferdb["true_transfers"]
     print(coll.count())
     coll.drop()
     print(coll.count())
