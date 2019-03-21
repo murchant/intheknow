@@ -15,10 +15,37 @@ def main():
     # blacklist = ["ouggi", "TheBoxingBrits", "Footballs1news", "sportsupdatefbb"]
     # print(top_tweeters)
     # make_false_commands(top_tweeters, blacklist)
-    querys = ["Transfer news", "Done Deal have signed", "in the know signed", "#intheknow", "reports in talks with", "transfer bid"]
-    general_query(querys)
+    # querys = ["Transfer news", "Done Deal have signed", "in the know signed", "#intheknow", "reports in talks with", "transfer bid"]
+    # general_query(querys)
+    synthetic_false(["Manchester United", "Chelsea", "Manchester City", "Liverpool"], ["Modric"], ["2017", "2016"])
 
 ###### FALSE TWEET FUNCTIONS ######
+
+def synthetic_false(clublist, playerlist, yearlist):
+    vars = []
+    for i in clublist:
+        for j in playerlist:
+            for k in yearlist:
+                year = k
+                list = [j, "", i, year]
+                variations = generate_ways(list, "1")
+                vars.append(variations)
+    make_sythetic_commands(vars)
+
+def make_sythetic_commands(variations):
+    file = open("twitter_queries/synfalse_cmds.txt",'w')
+    for i in variations:
+        vars , year = i
+        for j in vars:
+            term = '"' + j.strip() + '"'
+            start = year+"-06-01"
+            end = year+"-08-31"
+            cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since " + start + " --until "+ end +" --output ../info/synres.csv &"
+            file.write(cmd+"\n")
+    file.close()
+    return
+
+
 
 def general_query(querys):
     file = open("twitter_queries/query_cmds.txt",'w')
@@ -73,7 +100,7 @@ def make_true_qterms(type):
 def generate_ways(transfer, type):
     variations = []
 
-    transfer_terms = ["transfer", "signing", "deal", "medical", "close", "talks", "signed", "verge", "opened"]
+    transfer_terms = ["transfer to", "will sign", "having medical", "has signed", "on verge signing", "is signing for", "have been linked"]
 
     if type=="0":
         for i in transfer_terms:
