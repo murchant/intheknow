@@ -15,13 +15,21 @@ def main():
     # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
     # coll.insert_one(entry1)
     # correct_db("labelled__false_querys", wrongly_labelled2)
-    coll_list=transferdb.list_collection_names()
-    print(coll_list)
-    # coll = transferdb["confirmed_transfers_2017"]
+    # coll_list=transferdb.list_collection_names()
+    # print(coll_list)
+    # coll = transferdb["true_transfers"]
     # curs = coll.find({})
     # for doc in curs:
     #         pprint(doc)
     # print(coll.count())
+    coll = transferdb["true_transfers"]
+    print(coll.count())
+    coll.drop()
+    print(coll.count())
+    store_data(transferdb, "info/true_data_set.csv")
+    print(coll.count())
+
+
 
 
 
@@ -88,7 +96,7 @@ def store_data(transferdb, path):
     mycol = transferdb["true_transfers"]
     df_transfer_true = pd.read_csv(path, sep=',', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
-        entry = {"username": row['username'].strip(), "date": row['date'].strip(), "text": row['text'].strip()}
+        entry = {"username": row['username'].strip(), "date": row['date'].strip(), "tweet_text": row['text'].strip()}
         mycol.insert_one(entry)
     return
 
@@ -97,7 +105,7 @@ def make_player_db(transferdb, path):
     coll = transferdb["players"]
     df_transfer_true = pd.read_csv(path, sep=',', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
-        entry = {"player": row['Name'].strip(), "date": row["Date"]}
+        entry = {"player": row['Name'].strip(), "date": row["Date"], "label": "True"}
         coll.insert_one(entry)
     return
 
