@@ -17,7 +17,7 @@ def main():
     # make_false_commands(top_tweeters, blacklist)
     # querys = ["Transfer news", "Done Deal have signed", "in the know signed", "#intheknow", "reports in talks with", "transfer bid"]
     # general_query(querys)
-    synthetic_false(["Manchester United", "Chelsea", "Manchester City", "Liverpool"], ["Modric"], ["2017", "2016"])
+    synthetic_false(["Chelsea"], ["Mahrez"], ["2017", "2018"])
 
 ###### FALSE TWEET FUNCTIONS ######
 
