@@ -127,3 +127,5 @@ Knowledge Base was created to store a collection of known successful transfers a
 ### Classification
 
 - Overview: initial plan is to start off with basic linear regression model. Then move onto more complex interpretations, like NNs, CNNs .... maybe something else if i've time
+- MLP and Seq....being grossly overfitted
+- Change up to getting false tweets
