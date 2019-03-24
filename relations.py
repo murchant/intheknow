@@ -8,16 +8,7 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    # get_true_rels()
-    # make_true_qterms()
-    # top_tweeters = find_top_tweeters()
-    # top_tweeters = ["footyhlines", "roundclocksport", "SportsbookBTC"]
-    # blacklist = ["ouggi", "TheBoxingBrits", "Footballs1news", "sportsupdatefbb"]
-    # print(top_tweeters)
-    # make_false_commands(top_tweeters, blacklist)
-    # querys = ["Transfer news", "Done Deal have signed", "in the know signed", "#intheknow", "reports in talks with", "transfer bid"]
-    # general_query(querys)
-    synthetic_false(["Chelsea"], ["Mahrez"], ["2017", "2018"])
+    synthetic_false(["Arsenal", "Manchester United", "Manchester City", "Liverpool", "Chelsea", "Real Madrid", "Barcelona", "Juventus"], ["Thiago Silva"], ["2013", "2014", "2015", "2016", "2017", "2018"])
 
 ###### FALSE TWEET FUNCTIONS ######
 

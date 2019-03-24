@@ -11,27 +11,12 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    # coll = transferdb["clubs"]
-    # entry1 = {"Name": "Tottenham", "syns":"Spurs"}
-    # coll.insert_one(entry1)
-    # correct_db("labelled__false_querys", wrongly_labelled2)
-    # coll_list=transferdb.list_collection_names()
-    # print(coll_list)
-    # coll = transferdb["true_transfers"]
-    # curs = coll.find({})
-    # for doc in curs:
-    #         pprint(doc)
-    # print(coll.count())
-    # coll = transferdb["true_transfers"]
-    print(coll.count())
-    coll.drop()
-    print(coll.count())
-    store_data(transferdb, "info/true_data_set.csv")
-    print(coll.count())
 
 
-
-
+    # store_syn_false("info/synres.csv")
+    true = transferdb["true_transfers"]
+    false = transferdb["synfalse_transfers"]
+    print(false.count())
 
 
 def merge_db(namekeep, namecol):
@@ -56,7 +41,6 @@ def synonym_db():
     clubcoll = transferdb["clubs"]
     syncoll = transferdb["club_syns"]
     df = pd.DataFrame(list(clubcoll.find()))
-
     for index, row in df.iterrows():
         entry = {"club": row["Name"], "syns": generate_syns(row["Name"])}
         syncoll.insert_one(entry)
@@ -96,8 +80,16 @@ def store_data(transferdb, path):
     mycol = transferdb["true_transfers"]
     df_transfer_true = pd.read_csv(path, sep=',', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
-        entry = {"username": row['username'].strip(), "date": row['date'].strip(), "tweet_text": row['text'].strip()}
+        entry = {"username": row['username'].strip(), "date": row['date'].strip(), "tweet_text": row['text'].strip(), "label":"True"}
         mycol.insert_one(entry)
+    return
+
+def store_syn_false(path):
+    coll = transferdb["synfalse_transfers"]
+    df_transfer_synfalse = pd.read_csv(path, sep=';', error_bad_lines=False, encoding="utf-8")
+    for i, row in df_transfer_synfalse.iterrows():
+        entry = {"username": row['username'].strip(), "date": row['date'].strip(), "tweet_text": row['text'].strip(), "label":"False"}
+        coll.insert_one(entry)
     return
 
 
