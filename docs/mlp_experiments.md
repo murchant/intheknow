@@ -17,4 +17,4 @@
 - (BS=64, DR=0.5, units=4, layers=4) gives more consistent AUC values. Validation loss low and acc high whilst training loss high, and accuracy around 0.7. Not as good but more realistic see 2.2.2
 - (BS=64, DR=0.5, units=8, layers=4) better acc and loss value with same consistent AUC scores, see 2.2.3.
 - "" "" with units=16 showing promising, very sporadic though
--
+- (BS=64, **DR=0.4**, units=4, layers=4) more consistent loss and accuracy, see 2.2.4.
