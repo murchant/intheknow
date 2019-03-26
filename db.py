@@ -11,10 +11,16 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    store_syn_false("info/synres.csv")
+    store_syn_false("info/synres_extras7.csv")
     true = transferdb["true_transfers"]
     false = transferdb["synfalse_transfers"]
-    # false.drop()
+
+    # coll_list=transferdb.list_collection_names()
+    # print(coll_list)
+    # coll = transferdb["labelled_false_2015"]
+    # curs = coll.find({})
+    # for doc in curs:
+    #         pprint(doc)
     print(false.count())
 
 
