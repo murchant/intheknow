@@ -11,7 +11,7 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    store_syn_false("info/synres_extras7.csv")
+    # store_syn_false("info/synres_extras7.csv")
     true = transferdb["true_transfers"]
     false = transferdb["synfalse_transfers"]
 
@@ -21,7 +21,10 @@ def main():
     # curs = coll.find({})
     # for doc in curs:
     #         pprint(doc)
-    print(false.count())
+    # print(true.count())
+    # print(true.count())
+    # # store_syn_false("info/synres.csv")
+    # print(false.count())
 
 
 def merge_db(namekeep, namecol):
@@ -81,15 +84,16 @@ def generate_syns(club):
     return syns
 
 def store_data(transferdb, path):
-    mycol = transferdb["true_transfers"]
-    df_transfer_true = pd.read_csv(path, sep=',', error_bad_lines=False, encoding="utf-8")
+    mycol = transferdb["true_test_transfers"]
+    df_transfer_true = pd.read_csv(path, sep=';', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_true.iterrows():
+        print(i)
         entry = {"username": row['username'].strip(), "date": row['date'].strip(), "tweet_text": row['text'].strip(), "label":"True"}
         mycol.insert_one(entry)
     return
 
 def store_syn_false(path):
-    coll = transferdb["synfalse_transfers"]
+    coll = transferdb["synfalse_test_transfers"]
     df_transfer_synfalse = pd.read_csv(path, sep=';', error_bad_lines=False, encoding="utf-8")
     for i, row in df_transfer_synfalse.iterrows():
         if len(row.text)>6:
@@ -188,6 +192,16 @@ def manual_clubs(transferdb):
     coll.insert_one(entry2)
     coll.insert_one(entry3)
     coll.insert_one(entry4)
+
+def write_to_csv(cname, fname):
+    coll = transferdb[cname]
+    file = open(fname,'w')
+    curs = coll.find({})
+    for doc in curs:
+        line = doc['username'] + ";"+ (doc['date']) + ";"+ doc['tweet_text'] + ";"+ doc["label"]
+        file.write(line+"\n")
+    file.close()
+
 
 
 def intersect_db():

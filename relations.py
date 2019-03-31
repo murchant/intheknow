@@ -8,8 +8,9 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 transferdb = myclient["transferdb"]
 
 def main():
-    # synthetic_false(["Manchester", "Chelsea", "PSG", "Arsenal", "Barcelona"], ["Griezmann"], ["2014", "2015", "2016", "2017", "2018"])
-    make_true_commands()
+    synthetic_false(["Manchester", "Chelsea", "Arsenal"], ["Vardy", "Callum Wilson", "Mitrovic", "Joshua King", "Ighalo", "Defoe", "Berahino", "Pickford"], ["2014", "2015", "2016", "2017", "2018"])
+    # make_true_commands()
+    # get_true_rels()
 
 
 ###### FALSE TWEET FUNCTIONS ######
@@ -28,13 +29,17 @@ def synthetic_false(clublist, playerlist, yearlist):
 
 def make_sythetic_commands(variations):
     file = open("twitter_queries/synfalse_cmds.txt",'w')
+    count = 0
     for i in variations:
         vars , year = i
         for j in vars:
             term = '"' + j.strip() + '"'
             start = year+"-06-01"
             end = year+"-08-31"
-            cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 4000 --since " + start + " --until "+ end +" --output ../info/synres_extras7.csv &"
+            cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 4000 --since " + start + " --until "+ end +" --output ../info/synres.csv &"
+            count+=1
+            if count%5==0:
+                file.write("wait\n")
             file.write(cmd+"\n")
     file.close()
     return
@@ -70,14 +75,14 @@ def find_top_tweeters():
 def get_true_rels():
     with open('info/relationships2.csv', mode='w') as rels:
         rel_writer = csv.writer(rels, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        with open('info/transfers2017.csv') as transfers:
+        with open('info/transfers/transfers2015.csv') as transfers:
             csv_reader = csv.reader(transfers, delimiter=',')
             for row in csv_reader:
                 rel_writer.writerow([row[1], row[2], row[3], row[0]])  # player, from club, to club, date
-        with open('info/loans2017.csv') as transfers:
-            csv_reader = csv.reader(transfers, delimiter=',')
-            for row in csv_reader:
-                rel_writer.writerow([row[1], row[2], row[3], row[0]])  # player, from club, to club, date
+        # with open('info/loans2017.csv') as transfers:
+        #     csv_reader = csv.reader(transfers, delimiter=',')
+        #     for row in csv_reader:
+        #         rel_writer.writerow([row[1], row[2], row[3], row[0]])  # player, from club, to club, date
     return
 
 
@@ -112,7 +117,7 @@ def make_true_commands():
     for i in player_rels:
         for j in i[0]:
             term = '"' + j.strip() + '"'
-            cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2016-12-01 --until " +date_changer(i[1]) + " --output ../info/true.csv &"
+            cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2014-12-01 --until " +date_changer(i[1]) + " --output ../info/true.csv &"
             file.write(cmd+"\n")
             wait_break=wait_break+1
             if wait_break%20==0:
@@ -123,7 +128,7 @@ def make_true_commands():
     for i in player_rels:
         for j in i[0]:
             term = '"' + j.strip() + '"'
-            cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2016-12-01 --until " +date_changer(i[1]) + " --output ../info/trueShorter.csv &"
+            cmd = "python ../GetOldTweets/Exporter.py --querysearch " + term + " --maxtweets 100 --since 2014-12-01 --until " +date_changer(i[1]) + " --output ../info/trueShorter.csv &"
             file.write(cmd+"\n")
             wait_break=wait_break+1
             if wait_break%20==0:
