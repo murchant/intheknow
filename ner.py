@@ -25,7 +25,7 @@ transferdb = myclient["transferdb"]
 
 
 def main():
-    # get_entities(unicode("Confirmed: Blackburn complete deal for Ben Brereton"))
+    get_entities(unicode("Zlatan Ibrahimovic set to leave Manchester United imminently and to join MLS side LA GALAXY"))
     #
     # nltk_method("Reading are interested in signing Barnsley defender Andy Yiadom on a free transfer #ReadingFC #BarnsleyFC pic.twitter.com/K45MEvqJvI,,,#ReadingFC")
     # filter_pfalse()
@@ -33,7 +33,7 @@ def main():
 
     # retrain_nlp_model(unicode("Arsenal",encoding="utf-8"), ex)
     # retrain_batch(retrain_data2)
-    process_tweet()
+    # process_tweet()
     # res = english_club_check([u'Leeds', u'Caleb Ekuban', u'Trabzonspor'])
     # print(res)
     return
@@ -98,7 +98,6 @@ def process_tweet():
                     if len(player_hit)>0:
                         process_tweet_text(username, tweet_text, player_hit[0], pclubs)
                     else:
-                        # TODO check for player synonym
                         if len(pplayers)>0:
                             coll_false = transferdb["labelled_false_2017"]
                             entry = {"username": username.strip(), "tweet_text": tweet_text.strip(), "label":"False"}
@@ -131,7 +130,6 @@ def noise_filter(text):
         return True
 
 
-# Rethink how you're checking here, nicknames could be scraped
 def club_check(cname, pclist):
     # club_syns = transferdb["club_syns"]
     syn_list = db.query_collection({"club":cname}, "club_syns", transferdb)
