@@ -12,15 +12,14 @@ transferdb = myclient["transferdb"]
 
 def main():
     # store_syn_false("info/synres_extras7.csv")
-    true = transferdb["true_transfers"]
-    false = transferdb["synfalse_transfers"]
+    clubs = transferdb["english_clubs"]
 
     # coll_list=transferdb.list_collection_names()
     # print(coll_list)
     # coll = transferdb["labelled_false_2015"]
-    # curs = coll.find({})
-    # for doc in curs:
-    #         pprint(doc)
+    curs = clubs.find({})
+    for doc in curs:
+            pprint(doc)
     # print(true.count())
     # print(true.count())
     # # store_syn_false("info/synres.csv")
