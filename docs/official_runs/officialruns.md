@@ -5,8 +5,8 @@
   1. Val Acc = 0.98972225 ,  Val Loss = 0.0347153,  Test Acc = 0.7988,  Test Loss =0.7909,  AUC = 0.8128431443927335
   2. Val Acc = 0.9861666 ,  Val Loss = 0.0739316,  Test Acc = 0.8299,  Test Loss = 0.7802,  AUC = 0.6366147666200586
   3. Val Acc = 0.9891667 ,  Val Loss =0.0413369,  Test Acc = 0.8224,  Test Loss =0.7967,  AUC = 0.6356257963906833
-  4. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
-  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  4. Val Acc = 0.9873,  Val Loss =0.05520,  Test Acc = 0.82,  Test Loss =1.522,  AUC =0.69924732262624
+  5. Val Acc = 0.98577 ,  Val Loss =  0.063920,  Test Acc = 0.8265,  Test Loss =0.725,  AUC = 0.479925530723172
 
 
 1.2 layers = 6, units = 16, DR = 0.4
@@ -14,16 +14,16 @@
   1. Val Acc =0.99072224 ,  Val Loss =0.034677,  Test Acc = acc: 0.8054 ,  Test Loss =1.2758,  AUC = 0.8013638663967612
   2. Val Acc = 0.989,  Val Loss = 0.03667337460,  Test Acc = 0.7964 ,  Test Loss =0.9400,  AUC = 0.6908687686415953
   3. Val Acc = 0.9895,  Val Loss =0.03577422,  Test Acc = 0.8357,  Test Loss = 1.0333,  AUC = 0.44109834252864244
-  4. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
-  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  4. Val Acc = 0.9890,  Val Loss = 0.03720026,  Test Acc = 0.7958,  Test Loss =1.14,  AUC = 0.7672062818964523
+  5. Val Acc = 0.988,  Val Loss =0.0407,  Test Acc =0.803 ,  Test Loss =1.219,  AUC = 0.5360171752350639
 
 1.3 layers = 5, units = 8, DR = 0.4
 
-  1. Val Acc = 0.989,  Val Loss = 0.055717,  Test Acc = ,  Test Loss =,  AUC = 0.5489118762699827
+  1. Val Acc = 0.989,  Val Loss = 0.055717,  Test Acc =0.774 ,  Test Loss =1.15,  AUC = 0.5489118762699827
   2. Val Acc = 0.9858889,  Val Loss =0.0459527,  Test Acc =0.7853 ,  Test Loss =0.9242,  AUC = 0.4636744946950839
   3. Val Acc = 0.9895,  Val Loss =0.04803,  Test Acc = 0.7696,  Test Loss =1.503,  AUC = 0.654056212797619
-  4. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
-  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  4. Val Acc = 0.9878,  Val Loss =0.04927,  Test Acc = 0.819,  Test Loss =1.3525,  AUC = 0.4660213358794739
+  5. Val Acc = 0.9869,  Val Loss =0.04905,  Test Acc = 0.7921,  Test Loss =0.9429,  AUC =0.7516809241905438
 
 
 #### Iteration 2
@@ -40,11 +40,11 @@
 
   1. Val Acc =0.99116665 ,  Val Loss = 0.02964920,  Test Acc = 0.8024,  Test Loss =0.9478,  AUC = 0.8682147092679227
   2. Val Acc = 0.99072224,  Val Loss = 0.033086439399410,  Test Acc = 0.82,  Test Loss = 0.9373,  AUC = 0.6864205896624784
-  3. Val Acc = 0.989222,  Val Loss =0.034521,  Test Acc = ,  Test Loss =,  AUC = 0.4772474500868056
-  4. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
-  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  3. Val Acc = 0.989222,  Val Loss =0.034521,  Test Acc =0.7910 ,  Test Loss =0.39,  AUC = 0.4772474500868056
+  4. Val Acc = 0.990388,  Val Loss =0.029226,  Test Acc =0.8310 ,  Test Loss =0.69226,  AUC = 0.5893812599438738
+  5. Val Acc = 0.989,  Val Loss =0.0347,  Test Acc = 0.831 ,  Test Loss = 0.39,  AUC = 0.626420
 
-2.3 layers = 2 units = 16, DR = 0.4
+2.3 layers = 2 units = 16, DR = 0.4 ****
 
   1. Val Acc = 0.991055,  Val Loss =0.027,  Test Acc = 0.8096 ,  Test Loss = 0.8794,  AUC = 0.88932398557311
   2. Val Acc = 0.989,  Val Loss =0.03045,  Test Acc = 0.8160 ,  Test Loss =0.94,  AUC =0.7870723723696171
@@ -52,24 +52,24 @@
   4. Val Acc = 0.9906,  Val Loss =0.026502,  Test Acc =0.822 ,  Test Loss = 0.879,  AUC =0.6348439
   5. Val Acc = 0.99055,  Val Loss =0.02767,  Test Acc =0.816 ,  Test Loss =0.977,  AUC = 0.7479936742319166
 
-2.4 layers = 2 units = 16, DR = 0.25
+2.4 layers = 2 units = 16, DR = 0.25 ***
 
   1. Val Acc = 0.99105,  Val Loss =0.02640,  Test Acc = 0.817,  Test Loss =0.955,  AUC = 0.8864839898481109
   2. Val Acc = 0.9906,  Val Loss =0.02827,  Test Acc = 0.8281,  Test Loss =0.890,  AUC =0.7694879310407889
   3. Val Acc = 0.98855,  Val Loss =0.034078,  Test Acc =0.830 ,  Test Loss =0.8202,  AUC =0.60896783765
   4. Val Acc = 0.9912,  Val Loss = 0.0251288,  Test Acc = 0.8171,  Test Loss =0.968,  AUC = 0.746979
-  5. Val Acc = 0.99111 ,  Val Loss = 0.027617,  Test Acc = 0.8198 ,  Test Loss =0.8828,  AUC =0.5668155359273941
+  5. Val Acc = 0.9712,  Val Loss =0.0282,  Test Acc =0.850 ,  Test Loss =0.948,  AUC = 0.8164839
 
 
 #### Iteration 3
 
-3.1 layers = 4, units = 4, DR = 0.4
+3.1 layers = 4, units = 4, DR = 0.4  ***
 
   1. Val Acc = 0.98933333,  Val Loss = 0.12399007527033488,  Test Acc = 0.7933,  Test Loss = 1.3023,  AUC =0.7239844393592678
   2. Val Acc = 0.98638886,  Val Loss = 0.09992121553421021,  Test Acc = 0.8220 ,  Test Loss = 1.3315,  AUC = 0.8069850233544049
   3. Val Acc =0.988 ,  Val Loss =0.06009011283516884,  Test Acc = 0.8159,  Test Loss = 0.4633,  AUC =0.8249835212594425
   4. Val Acc = 0.98772,  Val Loss =0.052801373,  Test Acc = 0.8225,  Test Loss =0.4498,  AUC = 0.7321078074105447
-  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  5. Val Acc = 0.9763,  Val Loss =0.0700,  Test Acc =0.798 ,  Test Loss =0.4498,  AUC = 0.63321
 
 3.2 **Lower Dropout to 0.25**
 
