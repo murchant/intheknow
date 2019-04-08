@@ -17,6 +17,14 @@
   4. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
   5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
 
+1.2 layers = 6, units = 16, DR = 0.4
+
+  1. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  2. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  3. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  4. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+
 1.3 layers = 5, units = 8, DR = 0.4
 
   1. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
@@ -32,8 +40,8 @@
   1. Val Acc = 0.9893889,  Val Loss =0.034377913,  Test Acc = 0.8307,  Test Loss = 0.6852,  AUC = 0.7894862215467932
   2. Val Acc = 0.9905556,  Val Loss = 0.029455676899446795,  Test Acc = 0.8191 ,  Test Loss = 1.0327,  AUC = 0.5623680917988675
   3. Val Acc = 0.99 ,  Val Loss = 0.03162191076333531,  Test Acc = 0.8012 ,  Test Loss = 0.8206,  AUC = 0.6981382566373865
-  4. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
-  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+  4. Val Acc = 0.99061,  Val Loss =0.0284749,  Test Acc = 0.8054 ,  Test Loss =1.1431 ,  AUC =0.560691949356755
+  5. Val Acc = 0.989,  Val Loss =0.0300756,  Test Acc = 0.8250,  Test Loss =0.851,  AUC = 0.5790235797444611
 
 2.2 **Lower Dropout to 0.10** *(small amount of units)*
 
@@ -44,6 +52,14 @@
   5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
 
 2.3 layers = 2 units = 16, DR = 0.4
+
+  1. Val Acc = 0.991055,  Val Loss =0.027,  Test Acc = 0.8096 ,  Test Loss = 0.8794,  AUC = 0.88932398557311
+  2. Val Acc = 0.989,  Val Loss =0.03045,  Test Acc = 0.8160 ,  Test Loss =0.94,  AUC =0.7870723723696171
+  3. Val Acc = 0.99038,  Val Loss =0.0305986,  Test Acc =  0.8020 ,  Test Loss =0.8727 ,  AUC = 0.723131
+  4. Val Acc = 0.9906,  Val Loss =0.026502,  Test Acc =0.822 ,  Test Loss = 0.879,  AUC =0.6348439
+  5. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
+
+2.4 layers = 2 units = 32, DR = 0.4
 
   1. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
   2. Val Acc = ,  Val Loss =,  Test Acc = ,  Test Loss =,  AUC =
