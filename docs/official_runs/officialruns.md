@@ -2,6 +2,7 @@
 
 #### Iteration 1
 1.1 layers = 6, units = 8, DR = 0.4
+
   1. Val Acc = 0.98972225 ,  Val Loss = 0.0347153,  Test Acc = 0.7988,  Test Loss =0.7909,  AUC = 0.8128431443927335
   2. Val Acc = 0.9861666 ,  Val Loss = 0.0739316,  Test Acc = 0.8299,  Test Loss = 0.7802,  AUC = 0.6366147666200586
   3. Val Acc = 0.9891667 ,  Val Loss =0.0413369,  Test Acc = 0.8224,  Test Loss =0.7967,  AUC = 0.6356257963906833
