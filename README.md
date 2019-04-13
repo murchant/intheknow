@@ -1,6 +1,6 @@
 # intheknow
 
-## Project completed as dissertation for Masters degree
+ Project completed as dissertation for Masters degree.
 ## Overview
 This project aimed to determine the extent supervised machine learning techniques could be used to predict the accuracy of tweets in relation to football transfers.
 
