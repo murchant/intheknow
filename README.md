@@ -2,7 +2,7 @@
 
 ## Project completed as dissertation for Masters degree
 ## Overview
-This project aimed to determine the extent supervised machine learning techniques could be used to predict the accuracy of tweet in relation to football transfer.
+This project aimed to determine the extent supervised machine learning techniques could be used to predict the accuracy of tweets in relation to football transfers.
 
   **IMPORTANT:** ALL CODE CAN BE TAILORED TO YOUR SPECIFIC TWEET GATHERING, LABELLING AND CLASSIFICATION NEEDS.
 
